@@ -809,41 +809,94 @@
       <div class="divider"></div>
       <p style="max-width:720px;margin-bottom:1rem;font-size:0.97rem;line-height:1.8;">The MiNDS lab establishes multi-physics and multi-scale computational and experimental frameworks to enhance the energy efficiency, performance, and reliability of electronic devices and systems. Our work spans from atomistic simulations to system-level thermal management.</p>
 
+      <!-- TOPIC 01 -->
       <div class="research-topic">
         <div>
           <div class="topic-tag">Topic 01</div>
           <h2 class="topic-title">Thermal Management of Electronic Devices &amp; Electric Machines</h2>
-          <p style="color:var(--muted);font-size:0.9rem;line-height:1.75;margin-bottom:1rem;">We focus on thermal management across different length scales, from chip-level thermo-electrics and heat spreaders to advanced two-phase cooling for compact electric vehicle (EV) motors. By developing coupled electro-magnetics and CFD-HT models, we address the limitations of conventional single-phase cooling to enable higher power and torque densities.</p>
+          <p style="color:var(--muted);font-size:0.9rem;line-height:1.75;margin-bottom:1rem;">
+            We focus on thermal management across different length scales — from chip-level thermoelectric coolers (TECs) and 2D material heat spreaders to advanced two-phase cooling for compact electric vehicle (EV) and hybrid electric vehicle (HEV) motors.
+          </p>
+          <p style="color:var(--muted);font-size:0.9rem;line-height:1.75;margin-bottom:1rem;">
+            <strong>Motor Thermal Management:</strong> Permanent Magnet Synchronous Motors (PMSMs) are central to EV/HEV drivetrains, but copper losses and core losses generate intense heat that limits efficiency and longevity. We develop a two-way iteratively coupled electro-magnetic and thermal modeling framework to accurately predict component-wise heat losses and temperature distributions. Building on this, we propose a novel latent heat-driven, evaporation-assisted two-phase cooling technique targeting motor hot spots — demonstrating up to three times higher power and torque density in a significantly smaller motor volume compared to conventional single-phase jacket cooling. We also develop a highly discretized 3D Lumped Parameter Thermal Network (LPTN) model for real-time temperature monitoring and have successfully validated it on a 125 kW BMW i3 motor topology. Optimization algorithms and machine learning techniques are further applied to refine the evaporative cooling system at the system level.
+          </p>
+          <p style="color:var(--muted);font-size:0.9rem;line-height:1.75;margin-bottom:1rem;">
+            <strong>Thermoelectric Coolers for Microelectronics:</strong> We explore ultrathin TECs integrated on the active side of microelectronic devices for energy-efficient hot spot management. Key research areas include parasitic contact resistance effects, pulsed current control algorithms, and the coordinated operation of multiple TECs for spatiotemporally varying hot spots.
+          </p>
+          <p style="color:var(--muted);font-size:0.9rem;line-height:1.75;margin-bottom:1rem;">
+            <strong>Portable Electronics Heat Spreaders:</strong> We investigate 2D materials with high in-plane thermal conductivity — such as graphene and hexagonal boron nitride (h-BN) — as heat spreaders for hot spot control in portable electronics. We have developed transfer processes that preserve h-BN's thermal properties while remaining compatible with industrial fabrication, and we benchmark solutions using ultrafast thermal imaging and simulations.
+          </p>
+          <p style="color:var(--muted);font-size:0.85rem;line-height:1.6;margin-bottom:0.5rem;"><em>Funding: NSF</em></p>
         </div>
         <div class="topic-img-placeholder">[ Add Figure for Topic 01 ]</div>
       </div>
 
+      <!-- TOPIC 02 -->
       <div class="research-topic">
         <div>
           <div class="topic-tag">Topic 02</div>
-          <h2 class="topic-title">Multi-scale Transport Modeling of Nanoscale Materials</h2>
-          <p style="color:var(--muted);font-size:0.9rem;line-height:1.75;margin-bottom:1rem;">As devices scale down, Fourier's law fails. We explore thermal transport physics across novel materials and interfaces using atomistic simulations (DFT, AGF, MD). We also integrate machine learning (ML) to develop ML-based interatomic potentials for fast, accurate simulations and to study phenomena like defect influence and phonon transmission.</p>
+          <h2 class="topic-title">Multi-scale Transport Modeling of Nanoscale Materials &amp; Their Interfaces</h2>
+          <p style="color:var(--muted);font-size:0.9rem;line-height:1.75;margin-bottom:1rem;">
+            As electronic devices scale into the nanometer regime, Fourier's law of heat conduction breaks down and atomistic methods become essential. We explore thermal transport physics in novel electronic device materials and across material interfaces using density functional theory (DFT), the atomistic Green's function (AGF) method, and molecular dynamics (MD).
+          </p>
+          <p style="color:var(--muted);font-size:0.9rem;line-height:1.75;margin-bottom:1rem;">
+            <strong>ML-Based Interatomic Potentials:</strong> First-principles methods are computationally prohibitive for large or complex systems. We develop machine learning (ML)-based interatomic potentials — including our Voxelized Atomic Structure (VASt) framework using convolutional neural networks — that match quantum mechanical accuracy at a fraction of the cost. These potentials enable large-scale MD simulations to study the effects of strain, defects, and doping on thermal transport in materials like β-Ga₂O₃ and MoSe₂.
+          </p>
+          <p style="color:var(--muted);font-size:0.9rem;line-height:1.75;margin-bottom:1rem;">
+            <strong>Phonon Transport at Material Interfaces:</strong> Interfacial thermal transport is critical for 2D material-based devices. Using DFT and AGF, we study phonon transmission and thermal boundary conductance (TBC) at interfaces such as MoS₂/metal contacts (Au, Sc) and h-BN/single-layer graphene/h-BN heterostructures across different lattice stacking configurations.
+          </p>
+          <p style="color:var(--muted);font-size:0.9rem;line-height:1.75;margin-bottom:1rem;">
+            <strong>Phonon Transport Properties of Electronic Materials:</strong> Using DFT and the Boltzmann Transport Equation (BTE), we investigate phonon mode contributions to thermal conductivity, three-phonon scattering phase space, and phonon lifetimes in materials including 2D electride Ca₂N, β-Ga₂O₃ with vacancies, and monolayer MoSe₂ with defects and tungsten doping.
+          </p>
+          <p style="color:var(--muted);font-size:0.85rem;line-height:1.6;margin-bottom:0.5rem;"><em>Funding: NSF</em></p>
         </div>
         <div class="topic-img-placeholder">[ Add Figure for Topic 02 ]</div>
       </div>
 
+      <!-- TOPIC 03 -->
       <div class="research-topic">
         <div>
           <div class="topic-tag">Topic 03</div>
-          <h2 class="topic-title">Ultra-Wide Bandgap Materials &amp; Devices</h2>
-          <p style="color:var(--muted);font-size:0.9rem;line-height:1.75;margin-bottom:1rem;">We investigate electro-thermal transport in emerging ultra-wide bandgap materials like β-Ga₂O₃ for power and RF electronics. Using a combination of advanced modeling and thermal metrology techniques, we tackle self-heating challenges to enable higher breakdown voltages and switching efficiencies in field effect transistors (FETs).</p>
+          <h2 class="topic-title">Ultra-Wide Bandgap Materials &amp; Devices for Power and RF Electronics</h2>
+          <p style="color:var(--muted);font-size:0.9rem;line-height:1.75;margin-bottom:1rem;">
+            Wide bandgap (WBG) materials like SiC and GaN have well-established advantages over Si and GaAs for power and RF electronics. We look beyond WBG to the next frontier: ultra-wide bandgap (UWBG) materials, with β-Ga₂O₃ as a leading candidate. Its exceptionally wide bandgap enables higher breakdown voltages and switching efficiencies, but its low thermal conductivity causes severe self-heating in field effect transistors (FETs), posing a critical reliability challenge.
+          </p>
+          <p style="color:var(--muted);font-size:0.9rem;line-height:1.75;margin-bottom:1rem;">
+            <strong>Electrothermal Modeling:</strong> We develop 2D electrothermal models for β-Ga₂O₃ FETs (MESFETs, delta-doped devices) using Synopsys TCAD Sentaurus, studying how bias conditions and power settings affect Joule heating and temperature distribution. These models are coupled with Ansys Fluent and COMSOL to evaluate device-level thermal management strategies.
+          </p>
+          <p style="color:var(--muted);font-size:0.9rem;line-height:1.75;margin-bottom:1rem;">
+            <strong>Ultrafast Thermoreflectance Imaging:</strong> We use the Microsanj NT210B thermoreflectance system with a piezoelectric stage for nanoscale spatial and temporal temperature measurements on operating β-Ga₂O₃ devices. We measure temperature contours on source, drain, and gate pads, extract peak temperatures and thermal time constants at various bias conditions, and use these to build compact electrothermal models.
+          </p>
+          <p style="color:var(--muted);font-size:0.9rem;line-height:1.75;margin-bottom:1rem;">
+            <strong>Non-Gray Phonon Transport (BTE):</strong> We solve non-gray Boltzmann Transport Equations (BTE) to model phonon transport in β-Ga₂O₃ thin films and FETs. This approach captures hot-spot temperatures far more accurately than Fourier-based methods, providing crucial insights for future β-Ga₂O₃ device design.
+          </p>
+          <p style="color:var(--muted);font-size:0.85rem;line-height:1.6;margin-bottom:0.5rem;"><em>Funding: NSF</em></p>
         </div>
         <div class="topic-img-placeholder">[ Add Figure for Topic 03 ]</div>
       </div>
 
+      <!-- TOPIC 04 -->
       <div class="research-topic">
         <div>
           <div class="topic-tag">Topic 04</div>
-          <h2 class="topic-title">Flexible Electronics</h2>
-          <p style="color:var(--muted);font-size:0.9rem;line-height:1.75;margin-bottom:1rem;">We leverage additive technologies like aerosol jet printing (AJP) and inkjet printing to create low-cost electronic components and sensor platforms. By optimizing inks containing silver nanoparticles, carbon nanotubes (CNTs), and hexagonal boron nitride, we fabricate and optimize devices such as high-performance CNT FETs.</p>
+          <h2 class="topic-title">Flexible &amp; Printed Electronics</h2>
+          <p style="color:var(--muted);font-size:0.9rem;line-height:1.75;margin-bottom:1rem;">
+            Printed electronics promises extremely low-cost sensor platforms and electronic components, enabled by additive technologies such as aerosol jet printing (AJP) and inkjet printing (IJP). AJP is particularly versatile — it accommodates inks with viscosities from 1 to 1000 cP and achieves resolutions of 10–20 µm — allowing layer-by-layer fabrication of complete devices.
+          </p>
+          <p style="color:var(--muted);font-size:0.9rem;line-height:1.75;margin-bottom:1rem;">
+            <strong>Printed CNT FETs:</strong> We fabricate carbon nanotube (CNT) thin-film transistors (TFTs) using AJP, with silver nanoparticle ink for electrodes, 99.9%-pure CNT ink for the semiconducting layer, and a thin dielectric layer (xdi-dcs blend of PVP/PMSSQ) that enables low threshold voltage operation (~5 V). We also demonstrate multi-gated CNT FET arrays as physically unclonable functions (PUFs) for hardware security keys.
+          </p>
+          <p style="color:var(--muted);font-size:0.9rem;line-height:1.75;margin-bottom:1rem;">
+            <strong>Printed Gas Sensors:</strong> AJP-printed CNT-based sensors suffer from cross-sensitivity between gases. We address this with a double exponential-convolution model: the two time constants extracted from the sensor transient response are unique fingerprints for different gases (e.g., NH₃ vs. NO₂), independent of concentration but distinct across gas types — enabling reliable gas identity verification.
+          </p>
+          <p style="color:var(--muted);font-size:0.9rem;line-height:1.75;margin-bottom:1rem;">
+            <strong>Harsh Environment Electronics:</strong> Current printed electronics are limited to near-room-temperature operation. We are actively exploring material strategies and device architectures to extend this technology to harsh, high-temperature environments.
+          </p>
+          <p style="color:var(--muted);font-size:0.85rem;line-height:1.6;margin-bottom:0.5rem;"><em>Funding: NSF</em></p>
         </div>
         <div class="topic-img-placeholder">[ Add Figure for Topic 04 ]</div>
       </div>
+
     </div>
   </section>
 </div>
