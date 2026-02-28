@@ -1,1280 +1,2899 @@
 <!DOCTYPE html>
+
 <html lang="en">
+
 <head>
+
 <meta charset="UTF-8"/>
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
 <title>MiNDS Lab — Georgia Tech</title>
+
 <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@300;400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet"/>
+
 <style>
+
   /* ── DESIGN TOKENS ─────────────────────────────────────────── */
+
   :root {
+
     --navy:   #003057;
+
     --navy2:  #001f3f;
+
     --gold:   #B3A369;
+
     --gold2:  #D4AF37;
+
     --cream:  #FAF8F3;
+
     --text:   #1a1a2e;
+
     --muted:  #6b7280;
+
     --border: rgba(179,163,105,0.25);
+
     --ff-display: 'EB Garamond', Georgia, serif;
+
     --ff-body:    'DM Sans', sans-serif;
+
     --ff-mono:    'Space Mono', monospace;
+
     --nav-h: 70px;
+
   }
+
+
 
   /* ── RESET ──────────────────────────────────────────────────── */
+
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
   html { scroll-behavior: smooth; }
+
   body {
+
     font-family: var(--ff-body);
+
     background: var(--cream);
+
     color: var(--text);
+
     line-height: 1.7;
+
   }
+
   a { color: inherit; text-decoration: none; }
+
   img { max-width: 100%; display: block; }
 
+
+
   /* ── PAGE MANAGEMENT ────────────────────────────────────────── */
+
   .page { display: none; }
+
   .page.active { display: block; }
 
+
+
   /* ── NAVBAR ─────────────────────────────────────────────────── */
+
   nav {
+
     position: sticky; top: 0; z-index: 1000;
+
     background: var(--navy2);
+
     height: var(--nav-h);
+
     display: flex; align-items: center;
+
     border-bottom: 2px solid var(--gold);
+
     padding: 0 2rem;
+
     gap: 0;
+
   }
+
   .nav-brand {
+
     display: flex; align-items: center; gap: 0.75rem;
+
     margin-right: auto; cursor: pointer;
+
     flex-shrink: 0;
+
   }
+
   .nav-brand .logo-badge {
+
     width: 38px; height: 38px;
+
     background: var(--gold);
+
     border-radius: 6px;
+
     display: flex; align-items: center; justify-content: center;
+
     font-family: var(--ff-mono); font-size: 0.7rem; font-weight: 700;
+
     color: var(--navy2); letter-spacing: -0.5px; line-height: 1.2;
+
     text-align: center;
+
   }
+
   .nav-brand span {
+
     font-family: var(--ff-display); font-size: 1.1rem; color: #fff;
+
     letter-spacing: 0.02em;
+
   }
+
   .nav-brand small {
+
     display: block; font-family: var(--ff-body); font-size: 0.65rem;
+
     color: var(--gold); letter-spacing: 0.08em; text-transform: uppercase;
+
   }
+
+
 
   .nav-links { display: flex; align-items: stretch; height: 100%; }
+
   .nav-item {
+
     position: relative; display: flex; align-items: center;
+
     cursor: pointer;
+
   }
+
   .nav-item > .nav-label {
+
     padding: 0 1rem;
+
     font-size: 0.82rem; font-weight: 500; letter-spacing: 0.06em;
+
     text-transform: uppercase; color: rgba(255,255,255,0.85);
+
     white-space: nowrap;
+
     display: flex; align-items: center; gap: 0.3rem;
+
     height: 100%;
+
     transition: color 0.2s;
+
     border-bottom: 2px solid transparent;
+
   }
+
   .nav-item:hover > .nav-label,
+
   .nav-item.active > .nav-label {
+
     color: var(--gold2);
+
     border-bottom-color: var(--gold2);
+
   }
+
   .nav-item > .nav-label .caret {
+
     font-size: 0.6rem; opacity: 0.6;
+
   }
+
+
 
   /* Dropdown */
+
   .dropdown {
+
     display: none;
+
     position: absolute; top: 100%; left: 0;
+
     background: var(--navy2);
+
     border: 1px solid var(--border);
+
     border-top: 2px solid var(--gold);
+
     min-width: 220px;
+
     box-shadow: 0 8px 32px rgba(0,0,0,0.35);
+
   }
+
   .nav-item:hover .dropdown { display: block; }
+
   .dropdown a, .dropdown button {
+
     display: block; width: 100%;
+
     padding: 0.6rem 1.25rem;
+
     font-size: 0.8rem; letter-spacing: 0.03em;
+
     color: rgba(255,255,255,0.78);
+
     background: none; border: none; text-align: left; cursor: pointer;
+
     transition: background 0.15s, color 0.15s;
+
   }
+
   .dropdown a:hover, .dropdown button:hover {
+
     background: rgba(179,163,105,0.12); color: var(--gold2);
+
   }
+
+
 
   /* ── HERO ───────────────────────────────────────────────────── */
+
   .hero {
+
     position: relative; overflow: hidden;
+
     height: 520px;
+
     background: linear-gradient(135deg, var(--navy2) 0%, #0a2a50 60%, #0d3366 100%);
+
     display: flex; align-items: center; justify-content: center;
+
     text-align: center;
+
   }
+
   .hero-grid {
+
     position: absolute; inset: 0; opacity: 0.07;
+
     background-image:
+
       linear-gradient(var(--gold) 1px, transparent 1px),
+
       linear-gradient(90deg, var(--gold) 1px, transparent 1px);
+
     background-size: 48px 48px;
+
   }
+
   .hero-glow {
+
     position: absolute; top: -120px; left: 50%;
+
     transform: translateX(-50%);
+
     width: 700px; height: 500px;
+
     background: radial-gradient(ellipse, rgba(179,163,105,0.18) 0%, transparent 70%);
+
     pointer-events: none;
+
   }
+
   .hero-content { position: relative; z-index: 2; padding: 2rem; }
+
   .hero-eyebrow {
+
     font-family: var(--ff-mono); font-size: 0.72rem; letter-spacing: 0.2em;
+
     color: var(--gold); text-transform: uppercase; margin-bottom: 1rem;
+
   }
+
   .hero-title {
+
     font-family: var(--ff-display); font-size: clamp(2.4rem, 5vw, 4rem);
+
     color: #fff; line-height: 1.15; margin-bottom: 0.75rem;
+
     font-weight: 600;
+
   }
+
   .hero-title em { color: var(--gold2); font-style: italic; }
+
   .hero-subtitle {
+
     font-size: 1rem; color: rgba(255,255,255,0.65);
+
     max-width: 560px; margin: 0 auto 2rem;
+
   }
+
   .hero-ctas { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+
   .btn-primary {
+
     background: var(--gold); color: var(--navy2);
+
     padding: 0.7rem 1.8rem; font-weight: 600; font-size: 0.85rem;
+
     letter-spacing: 0.05em; text-transform: uppercase;
+
     border: none; cursor: pointer;
+
     transition: background 0.2s, transform 0.15s;
+
   }
+
   .btn-primary:hover { background: var(--gold2); transform: translateY(-1px); }
+
   .btn-outline {
+
     background: transparent; color: #fff;
+
     border: 1px solid rgba(255,255,255,0.35);
+
     padding: 0.7rem 1.8rem; font-weight: 500; font-size: 0.85rem;
+
     letter-spacing: 0.05em; text-transform: uppercase;
+
     cursor: pointer;
+
     transition: border-color 0.2s, color 0.2s;
+
   }
+
   .btn-outline:hover { border-color: var(--gold); color: var(--gold); }
 
+
+
   /* ── LAYOUT HELPERS ─────────────────────────────────────────── */
+
   .container { max-width: 1100px; margin: 0 auto; padding: 0 2rem; }
+
   .section { padding: 5rem 0; }
+
   .section-alt { background: #fff; }
+
   .section-dark { background: var(--navy2); color: #fff; }
 
+
+
   .section-label {
+
     font-family: var(--ff-mono); font-size: 0.68rem; letter-spacing: 0.2em;
+
     text-transform: uppercase; color: var(--gold); margin-bottom: 0.5rem;
+
   }
+
   .section-title {
+
     font-family: var(--ff-display); font-size: clamp(1.8rem, 3vw, 2.6rem);
+
     font-weight: 600; line-height: 1.2; margin-bottom: 1.5rem;
+
   }
+
   .divider {
+
     width: 48px; height: 3px; background: var(--gold);
+
     margin: 0 0 2rem;
+
   }
+
+
 
   /* ── HOME: PI BLOCK ─────────────────────────────────────────── */
+
   .pi-block {
+
     display: grid; grid-template-columns: 220px 1fr; gap: 3rem;
+
     align-items: start;
+
   }
+
   .pi-photo {
+
     width: 100%; aspect-ratio: 3/4; object-fit: cover;
+
     border: 3px solid var(--gold);
+
   }
+
   .pi-photo-placeholder {
+
     width: 100%; aspect-ratio: 3/4;
+
     background: linear-gradient(135deg, var(--navy) 0%, #0d3366 100%);
+
     border: 3px solid var(--gold);
+
     display: flex; flex-direction: column;
+
     align-items: center; justify-content: center;
+
     color: rgba(255,255,255,0.4);
+
     font-family: var(--ff-mono); font-size: 0.75rem; letter-spacing: 0.1em;
+
     text-align: center; gap: 0.5rem;
+
   }
+
   .pi-photo-placeholder svg { opacity: 0.3; }
 
+
+
   /* ── HOME: RESEARCH GRID ────────────────────────────────────── */
+
   .research-grid {
+
     display: grid; grid-template-columns: repeat(auto-fit, minmax(260px,1fr));
+
     gap: 1.5rem; margin-top: 2rem;
+
   }
+
   .research-card {
+
     border: 1px solid var(--border);
+
     background: var(--cream);
+
     padding: 1.75rem;
+
     position: relative;
+
     transition: transform 0.2s, box-shadow 0.2s;
+
   }
+
   .research-card:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(0,48,87,0.1); }
+
   .research-card::before {
+
     content: ''; position: absolute; top: 0; left: 0;
+
     width: 3px; height: 100%; background: var(--gold);
+
   }
+
   .research-card h3 {
+
     font-family: var(--ff-display); font-size: 1.1rem; margin-bottom: 0.5rem;
+
   }
+
   .research-card p { font-size: 0.88rem; color: var(--muted); line-height: 1.6; }
+
   .card-icon {
+
     font-size: 1.5rem; margin-bottom: 0.75rem;
+
   }
+
+
 
   /* ── HOME: NEWS FEED ────────────────────────────────────────── */
+
   .news-list { display: flex; flex-direction: column; gap: 0; }
+
   .news-item {
+
     display: grid; grid-template-columns: 90px 1fr;
+
     gap: 1.5rem; padding: 1.25rem 0;
+
     border-bottom: 1px solid var(--border);
+
     align-items: start;
+
   }
+
   .news-item:last-child { border-bottom: none; }
+
   .news-date {
+
     font-family: var(--ff-mono); font-size: 0.7rem; color: var(--gold);
+
     letter-spacing: 0.05em; padding-top: 0.2rem; line-height: 1.4;
+
   }
+
   .news-text { font-size: 0.88rem; line-height: 1.65; }
+
   .news-text strong { color: var(--navy); }
 
+
+
   /* ── HOME: STATS BANNER ─────────────────────────────────────── */
+
   .stats-banner {
+
     background: var(--navy); padding: 3rem 0;
+
     display: grid; grid-template-columns: repeat(4, 1fr);
+
     text-align: center;
+
   }
+
   .stat-item { padding: 1rem; }
+
   .stat-num {
+
     font-family: var(--ff-display); font-size: 3rem; color: var(--gold2);
+
     line-height: 1;
+
   }
+
   .stat-label {
+
     font-family: var(--ff-mono); font-size: 0.65rem; letter-spacing: 0.15em;
+
     text-transform: uppercase; color: rgba(255,255,255,0.55); margin-top: 0.5rem;
+
   }
+
+
 
   /* ── PEOPLE PAGE ────────────────────────────────────────────── */
+
   .people-grid {
+
     display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+
     gap: 2rem; margin-top: 2rem;
+
   }
+
   .person-card { text-align: center; }
+
   .person-photo {
+
     width: 100%; aspect-ratio: 1/1; object-fit: cover;
+
     margin-bottom: 0.75rem;
+
     background: linear-gradient(135deg, var(--navy) 0%, #0d3366 100%);
+
     display: flex; align-items: center; justify-content: center;
+
     color: rgba(255,255,255,0.25); font-size: 3rem;
+
   }
+
   .person-name { font-family: var(--ff-display); font-size: 1rem; font-weight: 600; }
+
   .person-role { font-size: 0.78rem; color: var(--gold); font-family: var(--ff-mono); letter-spacing: 0.05em; }
+
   .person-dept { font-size: 0.78rem; color: var(--muted); margin-top: 0.15rem; }
 
+
+
   .people-section-title {
+
     font-family: var(--ff-display); font-size: 1.4rem; font-weight: 600;
+
     padding-bottom: 0.5rem; border-bottom: 2px solid var(--gold);
+
     margin: 3rem 0 0;
+
   }
+
+
 
   /* ── PUBLICATIONS PAGE ──────────────────────────────────────── */
+
   .pub-year-nav {
+
     display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 2.5rem;
+
   }
+
   .pub-year-btn {
+
     padding: 0.3rem 0.85rem;
+
     border: 1px solid var(--border);
+
     background: none; cursor: pointer;
+
     font-family: var(--ff-mono); font-size: 0.72rem; color: var(--muted);
+
     transition: background 0.2s, color 0.2s, border-color 0.2s;
+
   }
+
   .pub-year-btn:hover, .pub-year-btn.active {
+
     background: var(--navy); color: var(--gold); border-color: var(--navy);
+
   }
+
   .pub-list { display: flex; flex-direction: column; gap: 1.5rem; }
+
   .pub-item {
+
     padding: 1.25rem 1.5rem;
+
     border-left: 3px solid var(--gold);
+
     background: #fff;
+
     box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+
   }
+
   .pub-title { font-family: var(--ff-display); font-size: 1rem; font-weight: 600; margin-bottom: 0.35rem; }
+
   .pub-authors { font-size: 0.82rem; color: var(--muted); margin-bottom: 0.25rem; }
+
   .pub-journal { font-size: 0.82rem; font-style: italic; color: var(--navy); }
+
   .pub-links { margin-top: 0.5rem; display: flex; gap: 0.75rem; }
+
   .pub-link {
+
     font-family: var(--ff-mono); font-size: 0.68rem; letter-spacing: 0.08em;
+
     color: var(--gold); border-bottom: 1px solid var(--gold);
+
     text-transform: uppercase; cursor: pointer;
+
   }
+
+
 
   /* ── RESEARCH PAGE ──────────────────────────────────────────── */
+
   .research-topic {
+
     display: grid; grid-template-columns: 1fr 380px; gap: 3rem;
+
     align-items: start; padding: 3rem 0;
+
     border-bottom: 1px solid var(--border);
+
   }
+
   .research-topic:last-child { border-bottom: none; }
+
   .research-topic:nth-child(even) { direction: rtl; }
+
   .research-topic:nth-child(even) > * { direction: ltr; }
+
   .topic-img-placeholder {
+
     aspect-ratio: 16/9;
+
     background: linear-gradient(135deg, var(--navy) 0%, #0d3366 100%);
+
     display: flex; align-items: center; justify-content: center;
+
     color: rgba(255,255,255,0.2); font-size: 0.75rem; font-family: var(--ff-mono);
+
     letter-spacing: 0.1em; text-align: center; padding: 1rem;
+
   }
+
   .topic-tag {
+
     display: inline-block;
+
     font-family: var(--ff-mono); font-size: 0.65rem; letter-spacing: 0.15em;
+
     text-transform: uppercase; color: var(--gold);
+
     border: 1px solid var(--gold); padding: 0.2rem 0.6rem;
+
     margin-bottom: 0.75rem;
+
   }
+
   .topic-title {
+
     font-family: var(--ff-display); font-size: 1.6rem; font-weight: 600;
+
     line-height: 1.2; margin-bottom: 1rem;
+
   }
+
+
 
   /* ── CONTACT PAGE ───────────────────────────────────────────── */
+
   .contact-grid {
+
     display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start;
+
   }
+
   .contact-info h3 {
+
     font-family: var(--ff-display); font-size: 1.3rem; margin-bottom: 1rem;
+
   }
+
   .contact-row {
+
     display: flex; gap: 0.75rem; align-items: flex-start;
+
     margin-bottom: 1rem; font-size: 0.88rem;
+
   }
+
   .contact-icon { color: var(--gold); flex-shrink: 0; margin-top: 0.1rem; }
+
   .contact-form { display: flex; flex-direction: column; gap: 1rem; }
+
   .contact-form input, .contact-form textarea, .contact-form select {
+
     width: 100%; padding: 0.75rem 1rem;
+
     border: 1px solid var(--border); background: #fff;
+
     font-family: var(--ff-body); font-size: 0.88rem; color: var(--text);
+
     outline: none; transition: border-color 0.2s;
+
   }
+
   .contact-form input:focus, .contact-form textarea:focus {
+
     border-color: var(--gold);
+
   }
+
   .contact-form textarea { height: 140px; resize: vertical; }
 
+
+
   /* ── GALLERY ────────────────────────────────────────────────── */
+
   .gallery-grid {
+
     display: grid; grid-template-columns: repeat(3,1fr); gap: 1rem;
+
     margin-top: 2rem;
+
   }
+
   .gallery-item {
+
     aspect-ratio: 4/3;
+
     background: linear-gradient(135deg, var(--navy) 0%, #0d3366 100%);
+
     position: relative; overflow: hidden; cursor: pointer;
+
     display: flex; align-items: flex-end;
+
   }
+
   .gallery-item:nth-child(3n+1) { background: linear-gradient(135deg, #001f3f, #003057); }
+
   .gallery-item:nth-child(3n+2) { background: linear-gradient(135deg, #0a2a50, #1a4f7a); }
+
   .gallery-item:nth-child(3n+3) { background: linear-gradient(135deg, #002244, #0d3366); }
+
   .gallery-caption {
+
     width: 100%; background: linear-gradient(transparent, rgba(0,0,0,0.65));
+
     color: rgba(255,255,255,0.9); padding: 0.75rem;
+
     font-size: 0.75rem; font-family: var(--ff-mono); letter-spacing: 0.04em;
+
   }
+
   .gallery-placeholder-icon {
+
     position: absolute; inset: 0;
+
     display: flex; align-items: center; justify-content: center;
+
     color: rgba(255,255,255,0.1); font-size: 2.5rem;
+
   }
+
+
 
   /* ── FACILITIES PAGE ────────────────────────────────────────── */
+
   .facilities-list { display: flex; flex-direction: column; gap: 2rem; margin-top: 2rem; }
+
   .facility-item {
+
     display: grid; grid-template-columns: 280px 1fr; gap: 2rem;
+
     background: #fff; border: 1px solid var(--border);
+
     overflow: hidden;
+
   }
+
   .facility-img {
+
     background: linear-gradient(135deg, var(--navy) 0%, #0d3366 100%);
+
     display: flex; align-items: center; justify-content: center;
+
     color: rgba(255,255,255,0.2); font-size: 0.7rem; font-family: var(--ff-mono);
+
     letter-spacing: 0.08em; text-align: center; padding: 1rem; min-height: 160px;
+
   }
+
   .facility-info { padding: 1.5rem 1.5rem 1.5rem 0; }
+
   .facility-info h3 { font-family: var(--ff-display); font-size: 1.1rem; margin-bottom: 0.5rem; }
+
   .facility-info p { font-size: 0.85rem; color: var(--muted); line-height: 1.6; }
 
+
+
   /* ── FOOTER ─────────────────────────────────────────────────── */
+
   footer {
+
     background: var(--navy2);
+
     border-top: 2px solid var(--gold);
+
     padding: 3rem 0 1.5rem;
+
     color: rgba(255,255,255,0.65);
+
     font-size: 0.82rem;
+
   }
+
   .footer-grid {
+
     display: grid; grid-template-columns: 2fr 1fr 1fr;
+
     gap: 3rem; margin-bottom: 2rem;
+
   }
+
   .footer-brand { font-family: var(--ff-display); font-size: 1.2rem; color: #fff; margin-bottom: 0.5rem; }
+
   .footer-desc { font-size: 0.82rem; line-height: 1.6; }
+
   .footer-col h4 {
+
     font-family: var(--ff-mono); font-size: 0.65rem; letter-spacing: 0.15em;
+
     text-transform: uppercase; color: var(--gold); margin-bottom: 0.75rem;
+
   }
+
   .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 0.4rem; }
+
   .footer-col ul li a { color: rgba(255,255,255,0.55); transition: color 0.2s; cursor: pointer; }
+
   .footer-col ul li a:hover { color: var(--gold); }
+
   .footer-bottom {
+
     border-top: 1px solid rgba(255,255,255,0.08);
+
     padding-top: 1.25rem;
+
     display: flex; justify-content: space-between; align-items: center;
+
     flex-wrap: wrap; gap: 0.5rem;
+
   }
+
   .footer-bottom .gt-logo {
+
     font-family: var(--ff-mono); font-size: 0.65rem; letter-spacing: 0.1em;
+
     color: var(--gold); text-transform: uppercase;
+
   }
+
+
 
   /* ── ANNOUNCEMENTS SIDEBAR STYLE ────────────────────────────── */
+
   .home-2col {
+
     display: grid; grid-template-columns: 1fr 360px; gap: 3rem; align-items: start;
+
   }
+
   .announcements-panel {
+
     background: var(--navy);
+
     padding: 1.75rem;
+
     color: #fff;
+
   }
+
   .announcements-panel h3 {
+
     font-family: var(--ff-display); font-size: 1.2rem;
+
     color: var(--gold2); margin-bottom: 1.25rem;
+
     padding-bottom: 0.75rem; border-bottom: 1px solid rgba(179,163,105,0.2);
+
   }
+
   .ann-item {
+
     padding: 0.75rem 0;
+
     border-bottom: 1px solid rgba(255,255,255,0.08);
+
     font-size: 0.83rem; line-height: 1.6;
+
     color: rgba(255,255,255,0.75);
+
   }
+
   .ann-item:last-child { border-bottom: none; }
+
   .ann-date {
+
     font-family: var(--ff-mono); font-size: 0.67rem; color: var(--gold);
+
     letter-spacing: 0.06em; display: block; margin-bottom: 0.2rem;
+
   }
+
   .ann-item a { color: var(--gold2); border-bottom: 1px solid rgba(212,175,55,0.3); }
 
+
+
   /* ── TABS (publications year tabs) ─────────────────────────── */
+
   .tab-content { display: none; }
+
   .tab-content.active { display: block; }
 
+
+
   /* ── RESPONSIVE ─────────────────────────────────────────────── */
+
   @media (max-width: 900px) {
+
     .pi-block, .contact-grid, .home-2col, .research-topic,
+
     .research-topic:nth-child(even) { grid-template-columns: 1fr; direction: ltr; }
+
     .stats-banner { grid-template-columns: repeat(2,1fr); }
+
     .gallery-grid { grid-template-columns: repeat(2,1fr); }
+
     .footer-grid { grid-template-columns: 1fr; }
+
     .facility-item { grid-template-columns: 1fr; }
+
     .nav-links { display: none; } /* mobile: simplified */
+
   }
+
 </style>
+
 </head>
+
 <body>
 
+
+
+<!-- ═══════════════════════════════════════════════════════════════
+
+     NAVIGATION
+
+════════════════════════════════════════════════════════════════ -->
+
 <nav>
+
   <div class="nav-brand" onclick="showPage('home')">
+
     <div class="logo-badge">Mi<br>NDS</div>
+
     <div>
+
       <span>MiNDS Lab</span>
+
       <small>Georgia Tech · ME</small>
+
     </div>
+
   </div>
+
   <div class="nav-links">
 
+
+
     <div class="nav-item" id="nav-home">
+
       <div class="nav-label" onclick="showPage('home')">Home</div>
+
     </div>
 
+
+
     <div class="nav-item">
+
       <div class="nav-label">Research <span class="caret">▾</span></div>
+
       <div class="dropdown">
+
         <button onclick="showPage('research-overview')">Overview</button>
+
         <button onclick="showPage('research-facilities')">Facilities</button>
+
         <button onclick="showPage('research-sponsors')">Sponsors</button>
+
         <button onclick="showPage('research-collaborators')">Collaborators</button>
+
       </div>
+
     </div>
 
+
+
     <div class="nav-item">
+
       <div class="nav-label" onclick="showPage('pi')">Dr. Kumar</div>
+
     </div>
 
+
+
     <div class="nav-item">
+
       <div class="nav-label">The Crew <span class="caret">▾</span></div>
+
       <div class="dropdown">
+
         <button onclick="showPage('crew-members')">Group Members</button>
+
         <button onclick="showPage('crew-alumni')">Group Alumni</button>
+
       </div>
+
     </div>
 
+
+
     <div class="nav-item">
+
       <div class="nav-label">Publications <span class="caret">▾</span></div>
+
       <div class="dropdown">
+
         <button onclick="showPage('pubs'); setYear('2024')">2024</button>
+
         <button onclick="showPage('pubs'); setYear('2023')">2023</button>
+
         <button onclick="showPage('pubs'); setYear('2022')">2022</button>
+
         <button onclick="showPage('pubs'); setYear('2021')">2021</button>
+
         <button onclick="showPage('pubs'); setYear('2020')">2020</button>
+
         <button onclick="showPage('pubs'); setYear('all')">All Publications</button>
+
         <button onclick="showPage('pubs'); setYear('patents')">Patents</button>
+
       </div>
+
     </div>
 
+
+
     <div class="nav-item">
+
       <div class="nav-label" onclick="showPage('gallery')">Gallery</div>
+
     </div>
 
+
+
     <div class="nav-item">
+
       <div class="nav-label" onclick="showPage('news')">News &amp; Media</div>
+
     </div>
 
+
+
     <div class="nav-item">
+
       <div class="nav-label" onclick="showPage('contact')">Contact</div>
+
     </div>
+
+
 
   </div>
+
 </nav>
 
 
+
+
+
+<!-- ═══════════════════════════════════════════════════════════════
+
+     PAGE: HOME
+
+════════════════════════════════════════════════════════════════ -->
+
 <div id="page-home" class="page active">
 
+
+
+  <!-- Hero -->
+
   <div class="hero">
+
     <div class="hero-grid"></div>
+
     <div class="hero-glow"></div>
+
     <div class="hero-content">
+
       <div class="hero-eyebrow">Georgia Tech · George W. Woodruff School of Mechanical Engineering</div>
+
       <h1 class="hero-title">Micro Nano Devices<br>&amp; <em>Systems Lab</em></h1>
+
       <p class="hero-subtitle">Advancing thermal management, multi-physics transport models, and machine learning-enabled multi-scale modeling of electronic devices and systems — from atoms to the continuum.</p>
+
       <div class="hero-ctas">
+
         <button class="btn-primary" onclick="showPage('research-overview')">Explore Research</button>
+
         <button class="btn-outline" onclick="showPage('crew-members')">Meet the Crew</button>
+
       </div>
+
     </div>
+
   </div>
+
+
+
+  <!-- Stats banner -->
 
   <div class="stats-banner">
+
     <div class="stat-item">
-      <div class="stat-num">160+</div>
+
+      <div class="stat-num">XX</div>
+
       <div class="stat-label">Publications</div>
+
     </div>
+
     <div class="stat-item">
-      <div class="stat-num">12+</div>
+
+      <div class="stat-num">XX</div>
+
       <div class="stat-label">Group Members</div>
+
     </div>
+
     <div class="stat-item">
-      <div class="stat-num">10+</div>
+
+      <div class="stat-num">XX</div>
+
       <div class="stat-label">Active Projects</div>
+
     </div>
+
     <div class="stat-item">
-      <div class="stat-num">15+</div>
+
+      <div class="stat-num">XX</div>
+
       <div class="stat-label">Years of Research</div>
+
     </div>
+
   </div>
 
+
+
+  <!-- PI intro + Research highlights -->
+
   <section class="section">
+
     <div class="container">
+
       <div class="pi-block">
+
         <div>
+
           <div class="pi-photo-placeholder">
+
             <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+
             <span>PI Photo</span>
+
           </div>
+
         </div>
+
         <div>
+
           <div class="section-label">Principal Investigator</div>
+
           <h2 class="section-title">Dr. Satish Kumar</h2>
+
           <div class="divider"></div>
+
           <p style="margin-bottom:1rem;">Dr. Kumar is the Rae S. and Frank H. Neely Professor in the George W. Woodruff School of Mechanical Engineering at Georgia Tech. His research centers on thermal management, multi-physics transport models, application of machine learning techniques to develop high-fidelity multi-scale models, and high-precision thermal metrology to analyze thermal materials.</p>
+
           <p style="margin-bottom:1.5rem;">His work proceeds systematically from new insights into thermal transport principles at the micro-nano scale to the development of innovative transport models and experimental demonstrations at the mesoscale and continuum scale. Dr. Kumar is an ASME Fellow and author of over 160 refereed journal and conference publications.</p>
+
           <button class="btn-primary" onclick="showPage('pi')">Full Bio →</button>
+
         </div>
+
       </div>
+
     </div>
+
   </section>
+
+
+
+  <!-- Research highlights -->
 
   <section class="section section-alt">
+
     <div class="container">
+
       <div class="section-label">What We Do</div>
+
       <h2 class="section-title">Research Highlights</h2>
+
       <div class="divider"></div>
+
       <div class="research-grid">
+
         <div class="research-card">
+
           <div class="card-icon">🔬</div>
+
           <h3>Nanoscale Thermal Transport</h3>
+
           <p>Atomistic and first-principles modeling of electro-thermal transport in 1D/2D nanostructures, interfaces, and wide-bandgap materials (GaN, Ga₂O₃, hBN, graphene).</p>
+
         </div>
+
         <div class="research-card">
+
           <div class="card-icon">⚡</div>
+
           <h3>Power Electronics Cooling</h3>
+
           <p>Design and analysis of thermal management solutions for high-power-density electronics including GaN HEMTs, SiC devices, and embedded thermoelectrics.</p>
+
         </div>
+
         <div class="research-card">
+
           <div class="card-icon">🤖</div>
+
           <h3>Machine Learning for Thermal Analysis</h3>
+
           <p>ML-enabled multi-scale models for rapid and accurate thermal transport analysis of 3D electronic packages, electric motors, and data center systems.</p>
+
         </div>
+
         <div class="research-card">
+
           <div class="card-icon">📡</div>
+
           <h3>Thermal Metrology</h3>
+
           <p>Ultra-fast thermoreflectance imaging and frequency-domain thermoreflectance (FDTR) techniques for high-fidelity characterization of electronic devices and materials.</p>
+
         </div>
+
         <div class="research-card">
+
           <div class="card-icon">🏭</div>
+
           <h3>Systems-Level Thermal Management</h3>
+
           <p>Meso-scale modeling and experimental validation for thermal reliability of data centers, electric motors, and forward operating base systems.</p>
+
         </div>
+
         <div class="research-card">
+
           <div class="card-icon">🧪</div>
+
           <h3>2D Materials &amp; Interfaces</h3>
+
           <p>Fundamental transport mechanisms in boron nitride, graphene, nanotubes, and polymer composites promising for next-generation micro- and power-electronics.</p>
+
         </div>
+
       </div>
+
     </div>
+
   </section>
 
+
+
+  <!-- News + Announcements -->
+
   <section class="section">
+
     <div class="container">
+
       <div class="home-2col">
+
         <div>
+
           <div class="section-label">Latest from the Lab</div>
+
           <h2 class="section-title">News</h2>
+
           <div class="divider"></div>
+
           <div class="news-list">
+
             <div class="news-item">
+
               <div class="news-date">2025<br>ITherm</div>
+
               <div class="news-text"><strong>Best Paper Runner-Up at ITherm 2025</strong> — Dr. Kumar and Ph.D. student Mingeun Choi won Best Paper Runner-Up for their work on distributed vertical power delivery and substrate-embedded microfluidic cooling.</div>
+
             </div>
+
             <div class="news-item">
-              <div class="news-date">Fall<br>2024</div>
-              <div class="news-text"><strong>$7.3M MURI Award</strong> — Dr. Kumar and collaborators from Purdue, Case Western Reserve, Michigan State, and Brown Universities were awarded a combined $7.3M MURI project from the Office of Naval Research for high-fidelity two-phase models. <a href="https://me.gatech.edu" style="color:var(--gold);">Read more →</a></div>
+
+              <div class="news-date">Spring<br>2024</div>
+
+              <div class="news-text"><strong>$7.3M MURI Award</strong> — Dr. Kumar (Frank H. Neely Professor) and collaborators from Purdue, Case Western Reserve, Michigan State, and Brown Universities were awarded a combined $7.3M MURI project from the Office of Naval Research for high-fidelity two-phase models. <a href="https://me.gatech.edu" style="color:var(--gold);">Read more →</a></div>
+
             </div>
+
             <div class="news-item">
-              <div class="news-date">Fall<br>2024</div>
-              <div class="news-text"><strong>Amitav Tikadar joins University of Mississippi</strong> — Congratulations to Dr. Amitav Tikadar on starting a tenure-track faculty position at the University of Mississippi.</div>
+
+              <div class="news-date">Spring<br>2024</div>
+
+              <div class="news-text"><strong>Amitav Tikadar joins University of Mississippi</strong> — Congratulations to Dr. Tikadar on starting a tenure-track faculty position at the University of Mississippi.</div>
+
             </div>
+
             <div class="news-item">
-              <div class="news-date">Fall<br>2024</div>
-              <div class="news-text"><strong>David Brown joins UVA</strong> — Congratulations to Dr. David Brown who will be starting a tenure-track position at UVA, MAE.</div>
-            </div>
-            <div class="news-item">
-              <div class="news-date">2024<br>Highlight</div>
-              <div class="news-text"><strong>Chimes Newsletter Highlight</strong> — The Chimes Newsletter recently highlighted the excellent work done by Prof. Kumar and Kad Kook.</div>
-            </div>
-            <div class="news-item">
+
               <div class="news-date">2020<br>ASME</div>
+
               <div class="news-text"><strong>Dr. Kumar receives 2020 ASME K-16 Clock Award</strong> — Recognizing outstanding contributions to the thermal management field.</div>
+
             </div>
+
+            <div class="news-item">
+
+              <div class="news-date">Spring<br>2019</div>
+
+              <div class="news-text"><strong>Dr. Kumar named ASME Fellow</strong> — A recognition of his significant contributions to the mechanical engineering profession.</div>
+
+            </div>
+
           </div>
+
           <br>
+
           <button class="btn-outline" onclick="showPage('news')" style="border-color:var(--navy);color:var(--navy);">See All News →</button>
+
         </div>
+
+
+
+        <!-- Announcements sidebar -->
 
         <div class="announcements-panel">
+
           <h3>📌 Announcements</h3>
+
           <div class="ann-item">
+
             <span class="ann-date">2025 · ITherm</span>
+
             Best Paper Runner-Up for Mingeun Choi &amp; Dr. Kumar on substrate-embedded microfluidic cooling for HPC processors.
+
           </div>
+
           <div class="ann-item">
-            <span class="ann-date">2024 · Faculty Honor</span>
+
+            <span class="ann-date">Sep 2024 · Research</span>
+
+            New paper: Choi et al., "Substrate-Embedded Microfluidic Cooling of Distributed Vertical Power Delivery Architectures," <em>IEEE Trans. CPMT</em>, 2025.
+
+          </div>
+
+          <div class="ann-item">
+
+            <span class="ann-date">2024 · Faculty</span>
+
             Dr. Kumar named <strong>Frank H. Neely Professor</strong> (Rae S. and Frank H. Neely Professorship) in the Woodruff School.
+
           </div>
+
           <div class="ann-item">
+
             <span class="ann-date">2024 · Alumni</span>
-            David Brown starts tenure-track position at UVA, MAE. Congratulations, Dr. Brown!
-          </div>
-          <div class="ann-item">
-            <span class="ann-date">2024 · Alumni</span>
+
             Amitav Tikadar starts tenure-track position at University of Mississippi. Congratulations, Dr. Tikadar!
+
           </div>
+
           <div class="ann-item">
+
             <span class="ann-date">2019 · Honor</span>
+
             Dr. Kumar named <strong>ASME Fellow</strong> in recognition of his contributions to mechanical engineering.
+
           </div>
+
+          <div class="ann-item">
+
+            <span class="ann-date">2017 · Honor</span>
+
+            Dr. Kumar named <strong>Woodruff Faculty Fellow</strong>.
+
+          </div>
+
         </div>
+
       </div>
+
     </div>
+
   </section>
+
+
+
+  <!-- Sponsors strip -->
 
   <section class="section section-dark">
+
     <div class="container" style="text-align:center;">
+
       <div class="section-label" style="color:var(--gold);">Funding &amp; Support</div>
+
       <h2 class="section-title" style="color:#fff;">Our Sponsors</h2>
+
       <div class="divider" style="margin:0 auto 2rem;"></div>
+
       <div style="display:flex;flex-wrap:wrap;justify-content:center;gap:1.5rem 3rem;color:rgba(255,255,255,0.45);font-family:var(--ff-mono);font-size:0.75rem;letter-spacing:0.12em;text-transform:uppercase;">
+
         <span>NSF</span><span>ONR</span><span>DARPA</span><span>DOE</span>
+
         <span>SRC</span><span>ORNL</span><span>Industry Partners</span>
+
       </div>
+
     </div>
+
   </section>
 
-</div><div id="page-pi" class="page">
+
+
+</div><!-- /page-home -->
+
+
+
+
+
+<!-- ═══════════════════════════════════════════════════════════════
+
+     PAGE: PI BIO
+
+════════════════════════════════════════════════════════════════ -->
+
+<div id="page-pi" class="page">
+
   <section class="section">
+
     <div class="container">
+
       <div class="section-label">Principal Investigator</div>
+
       <h1 class="section-title">Dr. Satish Kumar</h1>
+
       <div class="divider"></div>
+
       <div class="pi-block">
+
         <div>
+
           <div class="pi-photo-placeholder">
+
             <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+
             <span>PI Photo</span>
+
           </div>
+
           <div style="margin-top:1.25rem;display:flex;flex-direction:column;gap:0.5rem;">
+
             <div style="font-family:var(--ff-mono);font-size:0.68rem;color:var(--gold);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:0.25rem;">Contact</div>
+
             <div style="font-size:0.83rem;color:var(--muted);">📧 satish.kumar@me.gatech.edu</div>
+
             <div style="font-size:0.83rem;color:var(--muted);">🏢 Love Building, Room 123</div>
+
             <div style="font-size:0.83rem;color:var(--muted);">📞 (404) 385-6640</div>
+
             <div style="font-size:0.83rem;color:var(--muted);">📠 (404) 894-7790</div>
+
             <div style="margin-top:0.75rem;display:flex;flex-direction:column;gap:0.4rem;">
+
               <a href="https://scholar.google.com/citations?user=lb7RF0oAAAAJ&hl=en" target="_blank" style="font-family:var(--ff-mono);font-size:0.68rem;color:var(--gold);letter-spacing:0.08em;border-bottom:1px solid rgba(179,163,105,0.4);text-transform:uppercase;display:inline-block;">Google Scholar →</a>
+
               <a href="https://www.me.gatech.edu/faculty/kumar" target="_blank" style="font-family:var(--ff-mono);font-size:0.68rem;color:var(--gold);letter-spacing:0.08em;border-bottom:1px solid rgba(179,163,105,0.4);text-transform:uppercase;display:inline-block;">GT Faculty Page →</a>
+
             </div>
+
           </div>
+
         </div>
+
         <div>
+
           <div style="font-family:var(--ff-mono);font-size:0.72rem;color:var(--gold);letter-spacing:0.12em;text-transform:uppercase;margin-bottom:0.5rem;">Rae S. and Frank H. Neely Professor · ASME Fellow</div>
+
           <p style="font-size:1rem;line-height:1.8;margin-bottom:1.25rem;">Dr. Satish Kumar is the Rae S. and Frank H. Neely Professor in the George W. Woodruff School of Mechanical Engineering at Georgia Tech. He joined Georgia Tech in 2009 as an Assistant Professor. Prior to that, he worked at IBM Corporation, where he was responsible for the thermal management of electronic devices.</p>
+
           <p style="margin-bottom:1.25rem;line-height:1.75;">His research centers on thermal management, multi-physics transport models, application of machine learning techniques to develop high-fidelity multi-scale models, and high-precision thermal metrology to analyze thermal materials. His research proceeds systematically from new insights into thermal transport principles at the micro-nano scale to the development of innovative transport models and experimental demonstrations at the mesoscale and continuum scale.</p>
+
           <p style="margin-bottom:1.75rem;line-height:1.75;color:var(--muted);">He is author or co-author of over 160 refereed journal and conference publications and is an ASME Fellow and Woodruff Faculty Fellow.</p>
 
+
+
           <h3 style="font-family:var(--ff-display);font-size:1.1rem;margin-bottom:0.75rem;">Education</h3>
+
           <ul style="list-style:none;display:flex;flex-direction:column;gap:0.5rem;margin-bottom:1.75rem;">
+
             <li style="font-size:0.88rem;padding-left:1rem;border-left:2px solid var(--gold);">Ph.D., Mechanical Engineering, Purdue University, 2007</li>
+
             <li style="font-size:0.88rem;padding-left:1rem;border-left:2px solid rgba(179,163,105,0.35);">M.S., Electrical &amp; Computer Engineering, Purdue University, 2007</li>
+
             <li style="font-size:0.88rem;padding-left:1rem;border-left:2px solid rgba(179,163,105,0.35);">M.S., Mechanical Engineering, Louisiana State University, 2003</li>
+
             <li style="font-size:0.88rem;padding-left:1rem;border-left:2px solid rgba(179,163,105,0.35);">B.Tech., Mechanical Engineering, Indian Institute of Technology, Guwahati, 2001</li>
+
           </ul>
+
+
 
           <h3 style="font-family:var(--ff-display);font-size:1.1rem;margin-bottom:0.75rem;">Selected Honors &amp; Awards</h3>
+
           <ul style="list-style:none;display:flex;flex-direction:column;gap:0.4rem;margin-bottom:1.75rem;">
+
             <li style="font-size:0.85rem;color:var(--muted);">▸ Rae S. and Frank H. Neely Professorship, Georgia Tech</li>
+
             <li style="font-size:0.85rem;color:var(--muted);">▸ ASME Fellow, 2019</li>
+
             <li style="font-size:0.85rem;color:var(--muted);">▸ Woodruff Faculty Fellow, Georgia Tech, 2017</li>
+
             <li style="font-size:0.85rem;color:var(--muted);">▸ ASME K-16 Clock Award, 2020</li>
+
             <li style="font-size:0.85rem;color:var(--muted);">▸ DARPA Young Faculty Award, 2014</li>
+
             <li style="font-size:0.85rem;color:var(--muted);">▸ Sigma Xi Young Faculty Award, Georgia Tech, 2014</li>
+
             <li style="font-size:0.85rem;color:var(--muted);">▸ Summer Faculty Fellow, Air Force Research Laboratory, 2012</li>
+
             <li style="font-size:0.85rem;color:var(--muted);">▸ 1969 Teaching Fellow, Center for Enhancement of Teaching &amp; Learning, Georgia Tech</li>
+
             <li style="font-size:0.85rem;color:var(--muted);">▸ Purdue Research Foundation Fellowship, 2005</li>
+
           </ul>
 
+
+
           <h3 style="font-family:var(--ff-display);font-size:1.1rem;margin-bottom:0.75rem;">Research Areas</h3>
+
           <div style="display:flex;flex-wrap:wrap;gap:0.5rem;">
+
             <span style="padding:0.3rem 0.75rem;border:1px solid var(--border);font-size:0.78rem;color:var(--muted);">Thermal Management</span>
+
             <span style="padding:0.3rem 0.75rem;border:1px solid var(--border);font-size:0.78rem;color:var(--muted);">Wide-Bandgap Devices (GaN, Ga₂O₃)</span>
+
             <span style="padding:0.3rem 0.75rem;border:1px solid var(--border);font-size:0.78rem;color:var(--muted);">2D Materials</span>
+
             <span style="padding:0.3rem 0.75rem;border:1px solid var(--border);font-size:0.78rem;color:var(--muted);">Machine Learning for Thermal Systems</span>
+
             <span style="padding:0.3rem 0.75rem;border:1px solid var(--border);font-size:0.78rem;color:var(--muted);">Electric Motor Thermal Management</span>
+
             <span style="padding:0.3rem 0.75rem;border:1px solid var(--border);font-size:0.78rem;color:var(--muted);">Thermoreflectance Metrology</span>
+
             <span style="padding:0.3rem 0.75rem;border:1px solid var(--border);font-size:0.78rem;color:var(--muted);">Flexible Electronics</span>
+
           </div>
+
         </div>
+
       </div>
+
     </div>
+
   </section>
+
 </div>
 
+
+
+
+
+<!-- ═══════════════════════════════════════════════════════════════
+
+     PAGE: RESEARCH OVERVIEW
+
+════════════════════════════════════════════════════════════════ -->
 
 <div id="page-research-overview" class="page">
+
   <section class="section">
+
     <div class="container">
+
       <div class="section-label">What We Study</div>
+
       <h1 class="section-title">Research Overview</h1>
+
       <div class="divider"></div>
+
       <p style="max-width:720px;margin-bottom:1rem;font-size:0.97rem;line-height:1.8;">The MiNDS lab establishes multi-physics and multi-scale computational and experimental frameworks to enhance the energy efficiency, performance, and reliability of electronic devices and systems. Our work spans from atomistic simulations to system-level thermal management.</p>
 
+
+
       <div class="research-topic">
+
         <div>
+
           <div class="topic-tag">Topic 01</div>
+
           <h2 class="topic-title">Thermal Management of Electronic Devices &amp; Electric Machines</h2>
+
           <p style="color:var(--muted);font-size:0.9rem;line-height:1.75;margin-bottom:1rem;">We focus on thermal management across different length scales, from chip-level thermo-electrics and heat spreaders to advanced two-phase cooling for compact electric vehicle (EV) motors. By developing coupled electro-magnetics and CFD-HT models, we address the limitations of conventional single-phase cooling to enable higher power and torque densities.</p>
+
+          <p style="color:var(--muted);font-size:0.9rem;line-height:1.75;">[Add more detail about this research direction, key results, and ongoing projects.]</p>
+
         </div>
-        <div class="topic-img-placeholder">[ Add Figure for Topic 01 ]</div>
+
+        <div class="topic-img-placeholder">[ Research Figure / Image ]</div>
+
       </div>
 
+
+
       <div class="research-topic">
+
         <div>
+
           <div class="topic-tag">Topic 02</div>
+
           <h2 class="topic-title">Multi-scale Transport Modeling of Nanoscale Materials</h2>
+
           <p style="color:var(--muted);font-size:0.9rem;line-height:1.75;margin-bottom:1rem;">As devices scale down, Fourier's law fails. We explore thermal transport physics across novel materials and interfaces using atomistic simulations (DFT, AGF, MD). We also integrate machine learning (ML) to develop ML-based interatomic potentials for fast, accurate simulations and to study phenomena like defect influence and phonon transmission.</p>
+
+          <p style="color:var(--muted);font-size:0.9rem;line-height:1.75;">[Add more detail about this research direction, key results, and ongoing projects.]</p>
+
         </div>
-        <div class="topic-img-placeholder">[ Add Figure for Topic 02 ]</div>
+
+        <div class="topic-img-placeholder">[ Research Figure / Image ]</div>
+
       </div>
 
+
+
       <div class="research-topic">
+
         <div>
+
           <div class="topic-tag">Topic 03</div>
+
           <h2 class="topic-title">Ultra-Wide Bandgap Materials &amp; Devices</h2>
-          <p style="color:var(--muted);font-size:0.9rem;line-height:1.75;margin-bottom:1rem;">We investigate electro-thermal transport in emerging ultra-wide bandgap materials like β-Ga₂O₃ for power and RF electronics. Using a combination of advanced modeling and thermal metrology techniques, we tackle self-heating challenges to enable higher breakdown voltages and switching efficiencies in field effect transistors (FETs).</p>
+
+          <p style="color:var(--muted);font-size:0.9rem;line-height:1.75;margin-bottom:1rem;">We investigate electro-thermal transport in emerging ultra-wide bandgap materials like &beta;-Ga<sub>2</sub>O<sub>3</sub> for power and RF electronics. Using a combination of advanced modeling and thermal metrology techniques, we tackle self-heating challenges to enable higher breakdown voltages and switching efficiencies in field effect transistors (FETs).</p>
+
+          <p style="color:var(--muted);font-size:0.9rem;line-height:1.75;">[Add more detail about this research direction, key results, and ongoing projects.]</p>
+
         </div>
-        <div class="topic-img-placeholder">[ Add Figure for Topic 03 ]</div>
+
+        <div class="topic-img-placeholder">[ Research Figure / Image ]</div>
+
       </div>
 
+
+
       <div class="research-topic">
+
         <div>
+
           <div class="topic-tag">Topic 04</div>
+
           <h2 class="topic-title">Flexible Electronics</h2>
+
           <p style="color:var(--muted);font-size:0.9rem;line-height:1.75;margin-bottom:1rem;">We leverage additive technologies like aerosol jet printing (AJP) and inkjet printing to create low-cost electronic components and sensor platforms. By optimizing inks containing silver nanoparticles, carbon nanotubes (CNTs), and hexagonal boron nitride, we fabricate and optimize devices such as high-performance CNT FETs.</p>
+
+          <p style="color:var(--muted);font-size:0.9rem;line-height:1.75;">[Add more detail about this research direction, key results, and ongoing projects.]</p>
+
         </div>
-        <div class="topic-img-placeholder">[ Add Figure for Topic 04 ]</div>
+
+        <div class="topic-img-placeholder">[ Research Figure / Image ]</div>
+
       </div>
+
     </div>
+
   </section>
+
 </div>
 
+
+
+
+
+<!-- ═══════════════════════════════════════════════════════════════
+
+     PAGE: FACILITIES
+
+════════════════════════════════════════════════════════════════ -->
 
 <div id="page-research-facilities" class="page">
+
   <section class="section">
+
     <div class="container">
+
       <div class="section-label">Lab Infrastructure</div>
+
       <h1 class="section-title">Facilities &amp; Equipment</h1>
+
       <div class="divider"></div>
+
       <p style="color:var(--muted);margin-bottom:0.5rem;font-size:0.9rem;">The MiNDS lab houses state-of-the-art experimental and computational resources for thermal transport research.</p>
 
+
+
       <div class="facilities-list">
+
         <div class="facility-item">
-          <div class="facility-img">[ Image: FDTR System ]</div>
+
+          <div class="facility-img">[ Equipment Photo ]</div>
+
           <div class="facility-info">
+
             <h3>Frequency-Domain Thermoreflectance (FDTR) System</h3>
-            <p>Our custom-built FDTR system enables measurement of thermal conductivity, thermal boundary resistance, and heat capacity of thin films and bulk materials at the nanoscale. It serves as a cornerstone for high-fidelity thermal metrology of electronic devices and materials.</p>
+
+            <p>Our custom-built FDTR system enables measurement of thermal conductivity, thermal boundary resistance, and heat capacity of thin films and bulk materials at the nanoscale. [Add specifications and capabilities.]</p>
+
           </div>
+
         </div>
+
         <div class="facility-item">
-          <div class="facility-img">[ Image: Ultra-Fast System ]</div>
+
+          <div class="facility-img">[ Equipment Photo ]</div>
+
           <div class="facility-info">
+
             <h3>Ultra-Fast Thermoreflectance Imaging</h3>
-            <p>High-speed thermoreflectance imaging for mapping thermal distributions across active electronic devices, providing critical insights into heat dissipation pathways in novel semiconductor topologies.</p>
+
+            <p>High-speed thermoreflectance imaging with [X] ns temporal resolution for mapping thermal distributions across active electronic devices. [Add specifications and capabilities.]</p>
+
           </div>
+
         </div>
+
         <div class="facility-item">
-          <div class="facility-img">[ Image: HPC Resources ]</div>
+
+          <div class="facility-img">[ Equipment Photo ]</div>
+
           <div class="facility-info">
+
             <h3>High-Performance Computing Cluster</h3>
-            <p>Dedicated HPC resources for molecular dynamics, DFT, Monte Carlo, and ML-based thermal simulations, supporting our multi-physics transport models from the atomistic to the continuum scales.</p>
+
+            <p>Dedicated HPC resources for molecular dynamics, DFT, Monte Carlo, and ML-based thermal simulations. Access to [X] CPU cores and GPU nodes for large-scale calculations. [Add specifications.]</p>
+
           </div>
+
         </div>
+
+        <div class="facility-item">
+
+          <div class="facility-img">[ Equipment Photo ]</div>
+
+          <div class="facility-info">
+
+            <h3>[Additional Equipment Name]</h3>
+
+            <p>[Description of equipment, its capabilities, and how it is used in your research. Replace with real equipment from your lab.]</p>
+
+          </div>
+
+        </div>
+
       </div>
+
     </div>
+
   </section>
+
 </div>
 
+
+
+
+
+<!-- ═══════════════════════════════════════════════════════════════
+
+     PAGE: SPONSORS
+
+════════════════════════════════════════════════════════════════ -->
 
 <div id="page-research-sponsors" class="page">
+
   <section class="section">
+
     <div class="container">
+
       <div class="section-label">Funding</div>
+
       <h1 class="section-title">Sponsors &amp; Funding Agencies</h1>
+
       <div class="divider"></div>
+
       <p style="color:var(--muted);margin-bottom:2.5rem;max-width:680px;">We are grateful for the generous support of the following organizations that make our research possible.</p>
+
       <div class="research-grid">
+
         <div class="research-card">
+
           <h3>National Science Foundation (NSF)</h3>
+
+          <p style="margin-top:0.5rem;font-size:0.83rem;">Program / Grant title: [Title]. Grant No: [XXX]. [Brief description of funded project.]</p>
+
         </div>
+
         <div class="research-card">
+
           <h3>Office of Naval Research (ONR)</h3>
-          <p style="margin-top:0.5rem;font-size:0.83rem;">Supporting the $7.3M MURI project for the development of high-fidelity two-phase models.</p>
+
+          <p style="margin-top:0.5rem;font-size:0.83rem;">Program / Grant title: [Title]. Grant No: [XXX]. [Brief description of funded project.]</p>
+
         </div>
+
         <div class="research-card">
-          <h3>Defense Advanced Research Projects Agency (DARPA)</h3>
+
+          <h3>DARPA</h3>
+
+          <p style="margin-top:0.5rem;font-size:0.83rem;">Program / Grant title: [Title]. Grant No: [XXX]. [Brief description of funded project.]</p>
+
         </div>
+
         <div class="research-card">
+
           <h3>Dept. of Energy (DOE)</h3>
+
+          <p style="margin-top:0.5rem;font-size:0.83rem;">Program / Grant title: [Title]. Grant No: [XXX]. [Brief description of funded project.]</p>
+
         </div>
+
         <div class="research-card">
+
           <h3>Semiconductor Research Corporation (SRC)</h3>
+
+          <p style="margin-top:0.5rem;font-size:0.83rem;">Program / Grant title: [Title]. Grant No: [XXX]. [Brief description of funded project.]</p>
+
         </div>
+
         <div class="research-card">
-          <h3>Oak Ridge National Lab (ORNL) &amp; Industry Partners</h3>
+
+          <h3>Industry Partners</h3>
+
+          <p style="margin-top:0.5rem;font-size:0.83rem;">[Company Name], [Company Name]. [Brief description of collaborative projects.]</p>
+
         </div>
+
       </div>
+
     </div>
+
   </section>
+
 </div>
 
+
+
+
+
+<!-- ═══════════════════════════════════════════════════════════════
+
+     PAGE: COLLABORATORS
+
+════════════════════════════════════════════════════════════════ -->
 
 <div id="page-research-collaborators" class="page">
+
   <section class="section">
+
     <div class="container">
+
       <div class="section-label">Partnerships</div>
+
       <h1 class="section-title">Collaborators</h1>
+
       <div class="divider"></div>
+
       <div class="research-grid">
+
         <div class="research-card" style="padding:1.5rem;">
-          <div style="font-family:var(--ff-mono);font-size:0.65rem;color:var(--gold);letter-spacing:0.12em;text-transform:uppercase;margin-bottom:0.5rem;">Academic Partner</div>
-          <h3 style="font-size:0.95rem;">Purdue University</h3>
-          <p style="font-size:0.8rem;color:var(--muted);">MURI Project Partner<br>High-Fidelity Two-Phase Models</p>
+
+          <div style="font-family:var(--ff-mono);font-size:0.65rem;color:var(--gold);letter-spacing:0.12em;text-transform:uppercase;margin-bottom:0.5rem;">Georgia Tech</div>
+
+          <h3 style="font-size:0.95rem;">Prof. [Name]</h3>
+
+          <p style="font-size:0.8rem;color:var(--muted);">Department, Georgia Tech<br>[Area of collaboration]</p>
+
         </div>
+
         <div class="research-card" style="padding:1.5rem;">
-          <div style="font-family:var(--ff-mono);font-size:0.65rem;color:var(--gold);letter-spacing:0.12em;text-transform:uppercase;margin-bottom:0.5rem;">Academic Partner</div>
-          <h3 style="font-size:0.95rem;">Case Western Reserve University</h3>
-          <p style="font-size:0.8rem;color:var(--muted);">MURI Project Partner<br>High-Fidelity Two-Phase Models</p>
+
+          <div style="font-family:var(--ff-mono);font-size:0.65rem;color:var(--gold);letter-spacing:0.12em;text-transform:uppercase;margin-bottom:0.5rem;">External</div>
+
+          <h3 style="font-size:0.95rem;">Prof. [Name]</h3>
+
+          <p style="font-size:0.8rem;color:var(--muted);">[University]<br>[Area of collaboration]</p>
+
         </div>
+
         <div class="research-card" style="padding:1.5rem;">
-          <div style="font-family:var(--ff-mono);font-size:0.65rem;color:var(--gold);letter-spacing:0.12em;text-transform:uppercase;margin-bottom:0.5rem;">Academic Partner</div>
-          <h3 style="font-size:0.95rem;">Michigan State University</h3>
-          <p style="font-size:0.8rem;color:var(--muted);">MURI Project Partner<br>High-Fidelity Two-Phase Models</p>
+
+          <div style="font-family:var(--ff-mono);font-size:0.65rem;color:var(--gold);letter-spacing:0.12em;text-transform:uppercase;margin-bottom:0.5rem;">National Lab</div>
+
+          <h3 style="font-size:0.95rem;">[Name], Ph.D.</h3>
+
+          <p style="font-size:0.8rem;color:var(--muted);">Oak Ridge National Lab<br>[Area of collaboration]</p>
+
         </div>
-        <div class="research-card" style="padding:1.5rem;">
-          <div style="font-family:var(--ff-mono);font-size:0.65rem;color:var(--gold);letter-spacing:0.12em;text-transform:uppercase;margin-bottom:0.5rem;">Academic Partner</div>
-          <h3 style="font-size:0.95rem;">Brown University</h3>
-          <p style="font-size:0.8rem;color:var(--muted);">MURI Project Partner<br>High-Fidelity Two-Phase Models</p>
-        </div>
-        <div class="research-card" style="padding:1.5rem;">
-          <div style="font-family:var(--ff-mono);font-size:0.65rem;color:var(--gold);letter-spacing:0.12em;text-transform:uppercase;margin-bottom:0.5rem;">National Lab Partner</div>
-          <h3 style="font-size:0.95rem;">Oak Ridge National Lab</h3>
-          <p style="font-size:0.8rem;color:var(--muted);">Research Sponsor &amp; Collaborator</p>
-        </div>
+
       </div>
+
     </div>
+
   </section>
+
 </div>
 
+
+
+
+
+<!-- ═══════════════════════════════════════════════════════════════
+
+     PAGE: CREW – CURRENT MEMBERS
+
+════════════════════════════════════════════════════════════════ -->
 
 <div id="page-crew-members" class="page">
+
   <section class="section">
+
     <div class="container">
+
       <div class="section-label">The Team</div>
+
       <h1 class="section-title">Group Members</h1>
+
       <div class="divider"></div>
+
+
+
+      <!-- PI -->
 
       <div class="people-section-title" style="margin-top:0;">Principal Investigator</div>
+
       <div class="people-grid" style="grid-template-columns:repeat(auto-fill,minmax(180px,1fr));">
+
         <div class="person-card">
+
           <div class="person-photo">👤</div>
+
           <div class="person-name">Dr. Satish Kumar</div>
+
           <div class="person-role">Rae S. &amp; Frank H. Neely Professor</div>
+
           <div class="person-dept">Woodruff School of ME · ASME Fellow</div>
+
         </div>
+
       </div>
 
-      <div class="people-section-title">Graduate Students &amp; Researchers</div>
+
+
+      <div class="people-section-title">Postdoctoral Researchers</div>
+
       <div class="people-grid">
+
         <div class="person-card">
+
           <div class="person-photo">👤</div>
-          <div class="person-name">Mingeun Choi</div>
-          <div class="person-role">Ph.D. Student</div>
-          <div class="person-dept">Substrate-embedded microfluidic cooling</div>
+
+          <div class="person-name">[Name]</div>
+
+          <div class="person-role">Postdoctoral Researcher</div>
+
+          <div class="person-dept">[Research focus]</div>
+
         </div>
+
         <div class="person-card">
+
           <div class="person-photo">👤</div>
-          <div class="person-name">Kad Kook</div>
-          <div class="person-role">Ph.D. Student</div>
-          <div class="person-dept">Thermal Management</div>
+
+          <div class="person-name">[Name]</div>
+
+          <div class="person-role">Postdoctoral Researcher</div>
+
+          <div class="person-dept">[Research focus]</div>
+
         </div>
-        <div class="person-card">
-          <div class="person-photo">👤</div>
-          <div class="person-name">[Additional Name]</div>
-          <div class="person-role">Student Researcher</div>
-          <div class="person-dept">[Research Focus]</div>
-        </div>
+
       </div>
+
+
+
+      <div class="people-section-title">Ph.D. Students</div>
+
+      <div class="people-grid">
+
+        <div class="person-card">
+
+          <div class="person-photo">👤</div>
+
+          <div class="person-name">[Name]</div>
+
+          <div class="person-role">Ph.D. Student</div>
+
+          <div class="person-dept">[Research focus / Year]</div>
+
+        </div>
+
+        <div class="person-card">
+
+          <div class="person-photo">👤</div>
+
+          <div class="person-name">[Name]</div>
+
+          <div class="person-role">Ph.D. Student</div>
+
+          <div class="person-dept">[Research focus / Year]</div>
+
+        </div>
+
+        <div class="person-card">
+
+          <div class="person-photo">👤</div>
+
+          <div class="person-name">[Name]</div>
+
+          <div class="person-role">Ph.D. Student</div>
+
+          <div class="person-dept">[Research focus / Year]</div>
+
+        </div>
+
+        <div class="person-card">
+
+          <div class="person-photo">👤</div>
+
+          <div class="person-name">[Name]</div>
+
+          <div class="person-role">Ph.D. Student</div>
+
+          <div class="person-dept">[Research focus / Year]</div>
+
+        </div>
+
+        <div class="person-card">
+
+          <div class="person-photo">👤</div>
+
+          <div class="person-name">[Name]</div>
+
+          <div class="person-role">M.S. Student</div>
+
+          <div class="person-dept">[Research focus / Year]</div>
+
+        </div>
+
+      </div>
+
+
+
+      <div class="people-section-title">Undergraduate Researchers</div>
+
+      <div class="people-grid">
+
+        <div class="person-card">
+
+          <div class="person-photo">👤</div>
+
+          <div class="person-name">[Name]</div>
+
+          <div class="person-role">Undergraduate Researcher</div>
+
+          <div class="person-dept">[Major / Year]</div>
+
+        </div>
+
+        <div class="person-card">
+
+          <div class="person-photo">👤</div>
+
+          <div class="person-name">[Name]</div>
+
+          <div class="person-role">Undergraduate Researcher</div>
+
+          <div class="person-dept">[Major / Year]</div>
+
+        </div>
+
+      </div>
+
     </div>
+
   </section>
+
 </div>
 
+
+
+
+
+<!-- ═══════════════════════════════════════════════════════════════
+
+     PAGE: ALUMNI
+
+════════════════════════════════════════════════════════════════ -->
 
 <div id="page-crew-alumni" class="page">
+
   <section class="section">
+
     <div class="container">
+
       <div class="section-label">Where They Are Now</div>
+
       <h1 class="section-title">Group Alumni</h1>
+
       <div class="divider"></div>
+
+
 
       <div class="people-section-title" style="margin-top:0;">Ph.D. Alumni</div>
+
       <div style="display:flex;flex-direction:column;gap:0;">
+
         <div style="display:grid;grid-template-columns:200px 1fr 1fr;gap:1rem;padding:0.9rem 0;border-bottom:1px solid var(--border);font-size:0.87rem;align-items:center;">
-          <strong style="font-family:var(--ff-display);">Dr. Amitav Tikadar</strong>
-          <span style="color:var(--muted);">Ph.D. Graduate</span>
-          <span style="color:var(--gold);font-size:0.8rem;">Now at: University of Mississippi (Faculty)</span>
+
+          <strong style="font-family:var(--ff-display);">[Name]</strong>
+
+          <span style="color:var(--muted);">Ph.D. [Year] — [Thesis topic]</span>
+
+          <span style="color:var(--gold);font-size:0.8rem;">Now at: [Company/University]</span>
+
         </div>
+
         <div style="display:grid;grid-template-columns:200px 1fr 1fr;gap:1rem;padding:0.9rem 0;border-bottom:1px solid var(--border);font-size:0.87rem;align-items:center;">
-          <strong style="font-family:var(--ff-display);">Dr. David Brown</strong>
-          <span style="color:var(--muted);">Ph.D. Graduate</span>
-          <span style="color:var(--gold);font-size:0.8rem;">Now at: University of Virginia, MAE (Faculty)</span>
+
+          <strong style="font-family:var(--ff-display);">[Name]</strong>
+
+          <span style="color:var(--muted);">Ph.D. [Year] — [Thesis topic]</span>
+
+          <span style="color:var(--gold);font-size:0.8rem;">Now at: [Company/University]</span>
+
         </div>
+
         <div style="display:grid;grid-template-columns:200px 1fr 1fr;gap:1rem;padding:0.9rem 0;border-bottom:1px solid var(--border);font-size:0.87rem;align-items:center;">
-          <strong style="font-family:var(--ff-display);">Dr. Jialuo Chen</strong>
-          <span style="color:var(--muted);">Ph.D. Graduate</span>
-          <span style="color:var(--gold);font-size:0.8rem;">Now at: ANSYS Corp.</span>
+
+          <strong style="font-family:var(--ff-display);">[Name]</strong>
+
+          <span style="color:var(--muted);">Ph.D. [Year] — [Thesis topic]</span>
+
+          <span style="color:var(--gold);font-size:0.8rem;">Now at: [Company/University]</span>
+
         </div>
-        <div style="display:grid;grid-template-columns:200px 1fr 1fr;gap:1rem;padding:0.9rem 0;border-bottom:1px solid var(--border);font-size:0.87rem;align-items:center;">
-          <strong style="font-family:var(--ff-display);">Matthew [Last Name]</strong>
-          <span style="color:var(--muted);">NSTRF Fellowship Recipient</span>
-          <span style="color:var(--gold);font-size:0.8rem;">[Placement]</span>
-        </div>
+
       </div>
+
+
+
+      <div class="people-section-title">M.S. Alumni</div>
+
+      <div style="display:flex;flex-direction:column;gap:0;">
+
+        <div style="display:grid;grid-template-columns:200px 1fr 1fr;gap:1rem;padding:0.9rem 0;border-bottom:1px solid var(--border);font-size:0.87rem;align-items:center;">
+
+          <strong style="font-family:var(--ff-display);">[Name]</strong>
+
+          <span style="color:var(--muted);">M.S. [Year]</span>
+
+          <span style="color:var(--gold);font-size:0.8rem;">Now at: [Company/University]</span>
+
+        </div>
+
+      </div>
+
     </div>
+
   </section>
+
 </div>
 
+
+
+
+
+<!-- ═══════════════════════════════════════════════════════════════
+
+     PAGE: PUBLICATIONS
+
+════════════════════════════════════════════════════════════════ -->
 
 <div id="page-pubs" class="page">
+
   <section class="section">
+
     <div class="container">
+
       <div class="section-label">Scholarly Work</div>
+
       <h1 class="section-title">Publications</h1>
+
       <div class="divider"></div>
+
+
 
       <div class="pub-year-nav" id="pub-year-nav">
+
         <button class="pub-year-btn active" onclick="setYear('all')">All</button>
-        <button class="pub-year-btn" onclick="setYear('2025')">2025</button>
+
         <button class="pub-year-btn" onclick="setYear('2024')">2024</button>
+
         <button class="pub-year-btn" onclick="setYear('2023')">2023</button>
+
         <button class="pub-year-btn" onclick="setYear('2022')">2022</button>
+
         <button class="pub-year-btn" onclick="setYear('2021')">2021</button>
+
+        <button class="pub-year-btn" onclick="setYear('2020')">2020</button>
+
+        <button class="pub-year-btn" onclick="setYear('patents')">Patents</button>
+
       </div>
+
+
+
+      <!-- All -->
 
       <div id="tab-all" class="tab-content active">
-        <p style="font-size:0.83rem;color:var(--muted);margin-bottom:1.5rem;">Showing recent publications. Dr. Kumar has authored over 160 refereed journal and conference publications. Visit <a href="https://scholar.google.com/citations?user=lb7RF0oAAAAJ&hl=en" target="_blank" style="color:var(--gold);">Google Scholar</a> for the complete list.</p>
+
+        <p style="font-size:0.83rem;color:var(--muted);margin-bottom:1.5rem;">Showing recent publications. Use the year tabs to filter, or visit <a href="https://scholar.google.com/citations?user=lb7RF0oAAAAJ&hl=en" target="_blank" style="color:var(--gold);">Google Scholar</a> for the full list.</p>
+
         <div class="pub-list">
+
           <div class="pub-item">
+
             <div class="pub-title">Physics-informed Neural Networks to Predict Mass Transfer at Interfaces in Liquid-Vapor Phase Change Problems</div>
+
             <div class="pub-authors">Sakrikar, A., Rajeev, R., and Kumar, S.</div>
+
             <div class="pub-journal">International Journal of Heat and Mass Transfer, 259, 128392, 2026</div>
+
             <div class="pub-links"><span class="pub-link">DOI</span></div>
+
           </div>
+
           <div class="pub-item">
+
             <div class="pub-title">Machine Learning-Enabled Fast and Accurate Inversion of Thermal Properties at the Micro- and Nanoscale via Optical Metrology</div>
+
             <div class="pub-authors">Choi, M., Vaca, D., and Kumar, S.</div>
+
             <div class="pub-journal">Annual Review of Heat Transfer, 28, 277–337, Oct. 2025</div>
+
             <div class="pub-links"><span class="pub-link">DOI</span></div>
+
           </div>
+
           <div class="pub-item">
+
             <div class="pub-title">Substrate-Embedded Microfluidic Cooling of Distributed Vertical Power Delivery Architectures for High-Performance Computing Processors</div>
+
             <div class="pub-authors">Choi, M., Krishnakumar, S., Khorasani, R. R., Swaminathan, M., Partin-Vaisband, I., and Kumar, S.</div>
+
             <div class="pub-journal">IEEE Transactions on Component, Packaging and Manufacturing Technology, 15(9), 1912–1920, Sep. 2025</div>
+
             <div class="pub-links"><span class="pub-link">DOI</span></div>
+
           </div>
+
           <div class="pub-item">
+
             <div class="pub-title">Electric Motor Thermal Management Using 3D-Printed Hollow Liner</div>
+
             <div class="pub-authors">Tikadar, A., Hossain, M. J., and Kumar, S.</div>
+
             <div class="pub-journal">IEEE Transactions on Transportation Electrification, 11(3), 8318–8326, 2025</div>
+
             <div class="pub-links"><span class="pub-link">DOI</span></div>
+
           </div>
+
           <div class="pub-item">
+
             <div class="pub-title">Investigation of Thermal-Hydraulic Performance of Metal-Foam Heat Sink Using Machine Learning Approach</div>
+
             <div class="pub-authors">Tikadar, A., and Kumar, S.</div>
+
             <div class="pub-journal">International Journal of Heat and Mass Transfer, 199, 123438, 2022</div>
+
             <div class="pub-links"><span class="pub-link">DOI</span></div>
+
           </div>
+
           <div class="pub-item">
+
             <div class="pub-title">Flow Assisted Evaporative Cooling for Electric Motor</div>
+
             <div class="pub-authors">Tikadar, A., Kim, J. W., Joshi, Y., and Kumar, S.</div>
+
             <div class="pub-journal">IEEE Transactions on Transportation Electrification, 8(1), 1128–1143, 2021</div>
+
             <div class="pub-links"><span class="pub-link">DOI</span></div>
+
           </div>
+
+          <div class="pub-item">
+
+            <div class="pub-title">Spectral Analysis of the Heat Flow Across Crystalline and Amorphous Si–Water Interfaces</div>
+
+            <div class="pub-authors">Ramos-Alvarado, B., and Kumar, S.</div>
+
+            <div class="pub-journal">The Journal of Physical Chemistry C, 121(21), 11380–11389, 2017</div>
+
+            <div class="pub-links"><span class="pub-link">DOI</span></div>
+
+          </div>
+
         </div>
+
       </div>
+
+
+
+      <!-- Per year -->
+
+      <div id="tab-2024" class="tab-content">
+
+        <div class="pub-list">
+
+          <div class="pub-item">
+
+            <div class="pub-title">Substrate-Embedded Microfluidic Cooling of Distributed Vertical Power Delivery Architectures for High-Performance Computing Processors</div>
+
+            <div class="pub-authors">Choi, M., Krishnakumar, S., Khorasani, R. R., Swaminathan, M., Partin-Vaisband, I., and Kumar, S.</div>
+
+            <div class="pub-journal">IEEE Transactions on Component, Packaging and Manufacturing Technology, 15(9), 1912–1920, Sep. 2025</div>
+
+            <div class="pub-links"><span class="pub-link">DOI</span></div>
+
+          </div>
+
+          <div class="pub-item">
+
+            <div class="pub-title">Electric Motor Thermal Management Using 3D-Printed Hollow Liner</div>
+
+            <div class="pub-authors">Tikadar, A., Hossain, M. J., and Kumar, S.</div>
+
+            <div class="pub-journal">IEEE Transactions on Transportation Electrification, 11(3), 8318–8326, 2025</div>
+
+            <div class="pub-links"><span class="pub-link">DOI</span></div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+      <div id="tab-2023" class="tab-content">
+
+        <div class="pub-list">
+
+          <div class="pub-item">
+
+            <div class="pub-title">[2023 Publication Title]</div>
+
+            <div class="pub-authors">[Authors], [PI Name]</div>
+
+            <div class="pub-journal">[Journal], 2023</div>
+
+            <div class="pub-links"><span class="pub-link">DOI</span></div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+      <div id="tab-2022" class="tab-content">
+
+        <div class="pub-list">
+
+          <div class="pub-item">
+
+            <div class="pub-title">[2022 Publication Title]</div>
+
+            <div class="pub-authors">[Authors], [PI Name]</div>
+
+            <div class="pub-journal">[Journal], 2022</div>
+
+            <div class="pub-links"><span class="pub-link">DOI</span></div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+      <div id="tab-2021" class="tab-content"><div class="pub-list"><div class="pub-item"><div class="pub-title">[2021 Publication Title]</div><div class="pub-authors">[Authors]</div><div class="pub-journal">[Journal], 2021</div></div></div></div>
+
+      <div id="tab-2020" class="tab-content"><div class="pub-list"><div class="pub-item"><div class="pub-title">[2020 Publication Title]</div><div class="pub-authors">[Authors]</div><div class="pub-journal">[Journal], 2020</div></div></div></div>
+
+      <div id="tab-patents" class="tab-content">
+
+        <div class="pub-list">
+
+          <div class="pub-item">
+
+            <div class="pub-title">[Patent Title]</div>
+
+            <div class="pub-authors">[Inventors]</div>
+
+            <div class="pub-journal">US Patent No. [XXXXXXX], [Year]</div>
+
+          </div>
+
+        </div>
+
+      </div>
+
     </div>
+
   </section>
+
 </div>
 
+
+
+
+
+<!-- ═══════════════════════════════════════════════════════════════
+
+     PAGE: GALLERY
+
+════════════════════════════════════════════════════════════════ -->
 
 <div id="page-gallery" class="page">
+
   <section class="section">
+
     <div class="container">
+
       <div class="section-label">Lab Life</div>
+
       <h1 class="section-title">Gallery</h1>
+
       <div class="divider"></div>
+
       <div class="gallery-grid">
-        <div class="gallery-item"><div class="gallery-placeholder-icon">📸</div><div class="gallery-caption">Group Photo</div></div>
-        <div class="gallery-item"><div class="gallery-placeholder-icon">🔬</div><div class="gallery-caption">Lab Work</div></div>
-        <div class="gallery-item"><div class="gallery-placeholder-icon">🎓</div><div class="gallery-caption">ITherm Conference</div></div>
-        <div class="gallery-item"><div class="gallery-placeholder-icon">📸</div><div class="gallery-caption">Group Outing</div></div>
-        <div class="gallery-item"><div class="gallery-placeholder-icon">🏆</div><div class="gallery-caption">Award Ceremony</div></div>
-        <div class="gallery-item"><div class="gallery-placeholder-icon">🔬</div><div class="gallery-caption">Equipment Demo</div></div>
+
+        <div class="gallery-item"><div class="gallery-placeholder-icon">📸</div><div class="gallery-caption">Group Photo — [Event, Year]</div></div>
+
+        <div class="gallery-item"><div class="gallery-placeholder-icon">🔬</div><div class="gallery-caption">Lab Work — [Description]</div></div>
+
+        <div class="gallery-item"><div class="gallery-placeholder-icon">🎓</div><div class="gallery-caption">[Conference Name] — [Year]</div></div>
+
+        <div class="gallery-item"><div class="gallery-placeholder-icon">📸</div><div class="gallery-caption">Group Outing — [Year]</div></div>
+
+        <div class="gallery-item"><div class="gallery-placeholder-icon">🏆</div><div class="gallery-caption">Award Ceremony — [Year]</div></div>
+
+        <div class="gallery-item"><div class="gallery-placeholder-icon">🔬</div><div class="gallery-caption">[Equipment] Demo — [Year]</div></div>
+
+        <div class="gallery-item"><div class="gallery-placeholder-icon">📸</div><div class="gallery-caption">Group Retreat — [Year]</div></div>
+
+        <div class="gallery-item"><div class="gallery-placeholder-icon">🎓</div><div class="gallery-caption">PhD Defense — [Name, Year]</div></div>
+
+        <div class="gallery-item"><div class="gallery-placeholder-icon">📸</div><div class="gallery-caption">[Add your own caption]</div></div>
+
       </div>
+
     </div>
+
   </section>
+
 </div>
 
+
+
+
+
+<!-- ═══════════════════════════════════════════════════════════════
+
+     PAGE: NEWS & MEDIA
+
+════════════════════════════════════════════════════════════════ -->
 
 <div id="page-news" class="page">
+
   <section class="section">
+
     <div class="container">
+
       <div class="section-label">Updates</div>
+
       <h1 class="section-title">News &amp; Media</h1>
+
       <div class="divider"></div>
+
       <div class="news-list">
+
         <div class="news-item">
+
           <div class="news-date">2025<br>ITherm</div>
+
           <div class="news-text"><strong>Best Paper Runner-Up at ITherm 2025</strong><br>Dr. Kumar and Ph.D. student Mingeun Choi won Best Paper Runner-Up for their research on distributed vertical power delivery and substrate-embedded microfluidic cooling through an electro-thermal modeling framework.</div>
+
         </div>
+
         <div class="news-item">
+
           <div class="news-date">2024<br>MURI</div>
+
           <div class="news-text"><strong>$7.3M MURI Award — Office of Naval Research</strong><br>Dr. Kumar (Frank H. Neely Professor) and collaborators from Purdue University, Case Western Reserve University, Michigan State University, and Brown University received a combined $7.3M MURI project award for the development of high-fidelity two-phase models. <a href="https://me.gatech.edu" target="_blank" style="color:var(--gold);">Read more →</a></div>
+
         </div>
+
         <div class="news-item">
+
           <div class="news-date">2024<br>Faculty</div>
+
           <div class="news-text"><strong>Dr. Kumar Named Frank H. Neely Professor</strong><br>Dr. Satish Kumar was named the Rae S. and Frank H. Neely Professor in the George W. Woodruff School of Mechanical Engineering at Georgia Tech.</div>
+
         </div>
+
         <div class="news-item">
+
           <div class="news-date">2024<br>Alumni</div>
+
           <div class="news-text"><strong>Amitav Tikadar Joins University of Mississippi</strong><br>Congratulations to Dr. Amitav Tikadar on starting a tenure-track faculty position at the University of Mississippi!</div>
+
         </div>
+
         <div class="news-item">
-          <div class="news-date">2024<br>Alumni</div>
-          <div class="news-text"><strong>David Brown Joins UVA</strong><br>Congratulations to Dr. David Brown who will start a tenure-track position at UVA, MAE!</div>
-        </div>
-        <div class="news-item">
-          <div class="news-date">2024<br>Media</div>
-          <div class="news-text"><strong>Chimes Newsletter Highlights MiNDS Lab</strong><br>The Chimes Newsletter recently highlighted the excellent work being done by Prof. Kumar and Kad Kook.</div>
-        </div>
-        <div class="news-item">
+
           <div class="news-date">2020<br>Award</div>
+
           <div class="news-text"><strong>ASME K-16 Clock Award</strong><br>Dr. Kumar received the 2020 ASME K-16 Clock Award for outstanding contributions to thermal management research.</div>
+
         </div>
+
         <div class="news-item">
+
           <div class="news-date">Spring<br>2019</div>
+
           <div class="news-text"><strong>Dr. Kumar Named ASME Fellow</strong><br>Dr. Kumar was named an ASME Fellow in Spring 2019 in recognition of his significant contributions to the field of mechanical engineering.</div>
+
         </div>
+
         <div class="news-item">
-          <div class="news-date">2017<br>Honor</div>
-          <div class="news-text"><strong>Dr. Kumar Named Woodruff Faculty Fellow</strong><br>Dr. Kumar was named a Woodruff Faculty Fellow at Georgia Tech in July 2017.</div>
+
+          <div class="news-date">2019<br>Alumni</div>
+
+          <div class="news-text"><strong>Ph.D. Graduates Join Industry</strong><br>David Brown defended his Ph.D. thesis and joined Raytheon Technologies. Jialuo Chen defended his Ph.D. thesis and joined ANSYS Corp.</div>
+
         </div>
+
+        <div class="news-item">
+
+          <div class="news-date">2018<br>Award</div>
+
+          <div class="news-text"><strong>Matthew Receives NSTRF Fellowship</strong><br>Congratulations to Matthew on receiving the prestigious NASA Space Technology Research Fellowship (NSTRF).</div>
+
+        </div>
+
+        <div class="news-item">
+
+          <div class="news-date">2017<br>Honor</div>
+
+          <div class="news-text"><strong>Dr. Kumar Named Woodruff Faculty Fellow</strong><br>Dr. Kumar was named a Woodruff Faculty Fellow at Georgia Tech in July 2017.</div>
+
+        </div>
+
       </div>
+
     </div>
+
   </section>
+
 </div>
 
+
+
+
+
+<!-- ═══════════════════════════════════════════════════════════════
+
+     PAGE: CONTACT
+
+════════════════════════════════════════════════════════════════ -->
 
 <div id="page-contact" class="page">
+
   <section class="section">
+
     <div class="container">
+
       <div class="section-label">Get In Touch</div>
+
       <h1 class="section-title">Contact Us</h1>
+
       <div class="divider"></div>
+
       <div class="contact-grid">
+
         <div class="contact-info">
+
           <h3>MiNDS Lab — Dr. Satish Kumar</h3>
+
           <p style="color:var(--muted);margin-bottom:1.5rem;font-size:0.88rem;">We are always looking for motivated students and collaborators. Prospective PhD students are encouraged to apply through the Georgia Tech ME graduate program and reach out to Dr. Kumar directly.</p>
+
           <div class="contact-row">
+
             <span class="contact-icon">📍</span>
+
             <div>
+
               <strong>Location</strong><br>
+
               <span style="color:var(--muted);font-size:0.85rem;">Love Building, Room 123<br>Georgia Institute of Technology<br>801 Ferst Dr, Atlanta, GA 30332</span>
+
             </div>
+
           </div>
+
           <div class="contact-row">
+
             <span class="contact-icon">📧</span>
+
             <div>
+
               <strong>Email</strong><br>
+
               <span style="color:var(--muted);font-size:0.85rem;">satish.kumar@me.gatech.edu</span>
+
             </div>
+
           </div>
+
           <div class="contact-row">
+
             <span class="contact-icon">📞</span>
+
             <div>
+
               <strong>Phone</strong><br>
+
               <span style="color:var(--muted);font-size:0.85rem;">(404) 385-6640</span>
+
             </div>
+
           </div>
+
           <div class="contact-row">
+
             <span class="contact-icon">🔗</span>
+
             <div>
+
               <strong>Links</strong><br>
+
               <div style="display:flex;gap:1rem;margin-top:0.3rem;flex-wrap:wrap;">
+
                 <a href="https://scholar.google.com/citations?user=lb7RF0oAAAAJ&hl=en" target="_blank" style="font-family:var(--ff-mono);font-size:0.7rem;color:var(--gold);letter-spacing:0.08em;border-bottom:1px solid var(--gold);text-transform:uppercase;">Google Scholar</a>
+
                 <a href="https://www.me.gatech.edu/faculty/kumar" target="_blank" style="font-family:var(--ff-mono);font-size:0.7rem;color:var(--gold);letter-spacing:0.08em;border-bottom:1px solid var(--gold);text-transform:uppercase;">GT Faculty Page</a>
-                <a href="https://sites.gatech.edu/minds/" target="_blank" style="font-family:var(--ff-mono);font-size:0.7rem;color:var(--gold);letter-spacing:0.08em;border-bottom:1px solid var(--gold);text-transform:uppercase;">Original Lab Website</a>
+
+                <a href="https://sites.gatech.edu/minds/" target="_blank" style="font-family:var(--ff-mono);font-size:0.7rem;color:var(--gold);letter-spacing:0.08em;border-bottom:1px solid var(--gold);text-transform:uppercase;">Lab Website</a>
+
               </div>
+
             </div>
+
           </div>
+
+
 
           <div style="margin-top:2rem;padding:1.25rem;background:var(--navy);color:#fff;">
+
             <div style="font-family:var(--ff-mono);font-size:0.65rem;letter-spacing:0.15em;color:var(--gold);text-transform:uppercase;margin-bottom:0.5rem;">Prospective Students</div>
+
             <p style="font-size:0.83rem;color:rgba(255,255,255,0.7);line-height:1.6;">Interested in joining the MiNDS Lab? Please review our <a href="#" onclick="showPage('research-overview')" style="color:var(--gold);">research areas</a>, then email Dr. Kumar with your CV, transcripts, and a brief statement of interest.</p>
+
           </div>
+
         </div>
 
+
+
         <div>
+
           <h3 style="font-family:var(--ff-display);font-size:1.15rem;margin-bottom:1rem;">Send a Message</h3>
+
           <form class="contact-form" onsubmit="return false;">
+
             <input type="text" placeholder="Your Name"/>
+
             <input type="email" placeholder="Your Email"/>
+
             <input type="text" placeholder="Subject"/>
+
             <select>
+
               <option value="" disabled selected>I am a...</option>
+
               <option>Prospective PhD Student</option>
+
               <option>Prospective Postdoc</option>
+
               <option>Industry / Collaboration Inquiry</option>
+
               <option>Media / Press</option>
+
               <option>Other</option>
+
             </select>
+
             <textarea placeholder="Your message..."></textarea>
+
             <button class="btn-primary" type="submit" style="align-self:flex-start;">Send Message →</button>
+
           </form>
+
         </div>
+
       </div>
+
     </div>
+
   </section>
+
 </div>
 
 
+
+
+
+<!-- ═══════════════════════════════════════════════════════════════
+
+     FOOTER
+
+════════════════════════════════════════════════════════════════ -->
+
 <footer>
+
   <div class="container">
+
     <div class="footer-grid">
+
       <div>
+
         <div class="footer-brand">MiNDS Lab</div>
+
         <p class="footer-desc" style="margin-bottom:0.75rem;">Micro Nano Devices &amp; Systems Laboratory<br>Woodruff School of Mechanical Engineering<br>Georgia Institute of Technology</p>
-        <p class="footer-desc" style="color:rgba(255,255,255,0.35);">© <span id="yr">2026</span> Georgia Institute of Technology</p>
+
+        <p class="footer-desc" style="color:rgba(255,255,255,0.35);">© <span id="yr"></span> Georgia Institute of Technology</p>
+
       </div>
+
       <div class="footer-col">
+
         <h4>Navigate</h4>
+
         <ul>
+
           <li><a onclick="showPage('home')">Home</a></li>
+
           <li><a onclick="showPage('research-overview')">Research</a></li>
+
           <li><a onclick="showPage('pi')">PI Bio</a></li>
+
           <li><a onclick="showPage('crew-members')">The Crew</a></li>
+
           <li><a onclick="showPage('pubs')">Publications</a></li>
+
           <li><a onclick="showPage('gallery')">Gallery</a></li>
+
           <li><a onclick="showPage('contact')">Contact</a></li>
+
         </ul>
+
       </div>
+
       <div class="footer-col">
+
         <h4>Connect</h4>
+
         <ul>
+
           <li><a href="https://me.gatech.edu" target="_blank">GT ME Dept.</a></li>
+
           <li><a href="https://scholar.google.com/citations?user=lb7RF0oAAAAJ&hl=en" target="_blank">Google Scholar</a></li>
+
           <li><a href="https://sites.gatech.edu/minds/" target="_blank">MiNDS Lab (original)</a></li>
+
           <li><a href="https://www.me.gatech.edu/faculty/kumar" target="_blank">GT Faculty Page</a></li>
+
         </ul>
+
       </div>
+
     </div>
+
     <div class="footer-bottom">
+
       <span>MiNDS Lab · Love Building, Room 123 · Atlanta, GA 30332</span>
+
       <span class="gt-logo">Georgia Tech · Woodruff School of ME</span>
+
     </div>
+
   </div>
+
 </footer>
 
 
+
+
+
+<!-- ═══════════════════════════════════════════════════════════════
+
+     JAVASCRIPT
+
+════════════════════════════════════════════════════════════════ -->
+
 <script src="script.js"></script>
+
 </body>
+
 </html>
